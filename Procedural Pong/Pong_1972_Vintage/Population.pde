@@ -6,4 +6,25 @@ void population(){
   x2NetLeftBottom = displayWidth*1/40;
   y1NetLeftTop = displayHeight*0;
   y2NetLeftBottom = displayHeight;
+  xPaddleLeft = x1NetLeftTop;
+  yPaddleLeft = displayHeight*1/2;
+  widthPaddleLeft = displayWidth*1/100;
+  heightPaddleLeft = displayHeight*1/5;
+  x1NetMiddleTop = displayWidth*1/2;
+  y1NetMiddleTop = displayHeight*0;
+  x2NetMiddleBottom = displayWidth*1/2;
+  y2NetMiddleBottom = displayHeight;
+  x1NetRightTop = displayWidth*39/40;
+  y1NetRightTop = displayHeight*0;
+  x2NetRightBottom = displayWidth*39/40;
+  y2NetRightBottom = displayHeight;
+  xPaddleRight = displayWidth*39/40;
+  yPaddleRight = displayHeight*1/2;
+  widthPaddleRight = displayWidth*1/100;
+  heightPaddleRight = displayHeight*1/5;
+  xLeftScore = width*1/4;
+  xRightScore = width*3/4;
+  yLeftScore = yRightScore = height*0;
+  widthScore = width*1/10;
+  heightScore = height*1/10;
 }
