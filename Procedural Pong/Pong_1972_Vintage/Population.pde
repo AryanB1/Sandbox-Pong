@@ -1,30 +1,21 @@
-void population(){
-  xBall = displayWidth*1/2;
-  yBall = displayHeight*1/2;
-  ballDiameter = displayWidth*1/50;
-  x1NetLeftTop = displayWidth*1/40;
-  x2NetLeftBottom = displayWidth*1/40;
-  y1NetLeftTop = displayHeight*0;
-  y2NetLeftBottom = displayHeight;
-  xPaddleLeft = x1NetLeftTop;
-  yPaddleLeft = displayHeight*1/2;
-  widthPaddleLeft = displayWidth*1/100;
-  heightPaddleLeft = displayHeight*1/5;
-  x1NetMiddleTop = displayWidth*1/2;
-  y1NetMiddleTop = displayHeight*0;
-  x2NetMiddleBottom = displayWidth*1/2;
-  y2NetMiddleBottom = displayHeight;
-  x1NetRightTop = displayWidth*39/40;
-  y1NetRightTop = displayHeight*0;
-  x2NetRightBottom = displayWidth*39/40;
-  y2NetRightBottom = displayHeight;
-  xPaddleRight = displayWidth*39/40;
-  yPaddleRight = displayHeight*1/2;
-  widthPaddleRight = displayWidth*1/100;
-  heightPaddleRight = displayHeight*1/5;
-  xLeftScore = width*1/4;
-  xRightScore = width*3/4;
-  yLeftScore = yRightScore = height*0;
+void population() {
+  xBall = width*1/2;
+  yBall = height*1/2;
+  ballDiameter = width*1/50;
+  x2MiddleLine= x1MiddleLine = width*1/2;
+  xLeftPaddle = x2LeftNet = x1LeftNet = width*1/40;
+  x2RightNet = x1RightNet = width*39/40;
+  yLeftScore = yRightScore = y1MiddleLine = y1RightNet = y1LeftNet = height*0;
+  y2MiddleLine = y2RightNet = y2LeftNet = height;
+  widthPaddle = width*1/100;
+  heightPaddle = height*1/5;
   widthScore = width*1/10;
   heightScore = height*1/10;
-}
+  //
+  yLeftPaddle = (height*1/2) - (heightPaddle*1/2);
+  yRightPaddle = (height*1/2)  - (heightPaddle*1/2);
+  xRightPaddle = (width*39/40) - (widthPaddle);
+  //
+  xLeftScore = (width*1/4) - (widthScore*1/2);
+  xRightScore = (width*3/4) - (widthScore*1/2);
+}//End population
