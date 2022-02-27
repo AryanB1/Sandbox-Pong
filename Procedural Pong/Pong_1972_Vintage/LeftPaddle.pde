@@ -1,18 +1,33 @@
 //Global Variable
-int leftPaddleSpeed = 1;
-
+int leftPaddleSpeed;
+boolean moveLeftPaddleDown = true;
+boolean moveLeftPaddleUp = true;
 void leftPaddleDraw() {
   leftPaddleStart(); //Might have to move outside draw()
   //
-  if ( yLeftPaddle < displayHeight*0) yLeftPaddle = displayHeight*0;
-  if ( yLeftPaddle+heightPaddle > displayHeight) yLeftPaddle = displayHeight;
+  if ( yLeftPaddle < displayHeight*0) moveLeftPaddleUp = false;
+  if ( yLeftPaddle+heightPaddle > displayHeight) moveLeftPaddleDown = false;
   //
 }//End leftPaddle
 
 void leftPaddleKeyPressed() {
-  //Left Paddle: 'W' & 'S' Keys
-  if ( key=='W' || key=='w' ) yLeftPaddle -= 1.1*leftPaddleSpeed ; //yRightPaddle=yRightPaddle-1, yRightPaddle--
-  if ( key=='S' || key=='s' ) yLeftPaddle += leftPaddleSpeed;
+  if(key=='N' || key=='n') {
+    leftPaddleSpeed = 10;
+  }
+  if(key=='R'||key=='r'){
+    leftPaddleSpeed = 20;
+  }
+  if(key=='G'||key=='g'){
+    leftPaddleSpeed = 30;
+  }
+  if ( key=='W' && moveLeftPaddleUp == true|| key=='w' && moveLeftPaddleUp == true){ 
+    yLeftPaddle -= leftPaddleSpeed; //yRightPaddle=yRightPaddle-1, yRightPaddle--
+    moveLeftPaddleDown = true;
+  }
+  if ( key=='S' && moveLeftPaddleDown == true || key=='s' && moveLeftPaddleDown == true){
+    yLeftPaddle += leftPaddleSpeed;
+    moveLeftPaddleUp = true;
+  }
 }//End rightPaddlekeyPressed
 
 void leftPaddleStart() {
