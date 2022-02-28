@@ -1,12 +1,11 @@
 int leftScore = 0, rightScore = 0;
-void leftScoreUpdate(){
+void scoreUpdate(){
   if(leftGoalScore == true){
-    leftScore += 1;
+    rightScore += 1;
     leftGoalScore = false;
   }
   if(rightGoalScore == true){
-    rightScore += 1;
+    leftScore += 1;
     rightGoalScore = false;
   }
-  
 }

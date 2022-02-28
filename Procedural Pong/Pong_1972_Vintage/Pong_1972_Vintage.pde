@@ -21,6 +21,7 @@ void draw() {
   fill(255);
   leftPaddleDraw(); //Another Purpose of developer-written functions
   rightPaddleDraw();
+  scoreUpdate();
   stroke(255);
   line(x1LeftNet, y1LeftNet, x2LeftNet, y2LeftNet);
   line(x1RightNet, y1RightNet, x2RightNet, y2RightNet);
@@ -34,6 +35,12 @@ void draw() {
   rect(xLeftScore, yLeftScore, widthScore, heightScore);
   rect(xRightScore, yRightScore, widthScore, heightScore);
   fill(255);
+  textAlign(CENTER);
+  textSize(heightScore*1/2);
+  text(leftScore, (xLeftScore+(widthScore*1/2)), (yLeftScore+(heightScore*1/2)));
+  textAlign(CENTER);
+  textSize(heightScore*1/2);
+  text(rightScore, (xRightScore+(widthScore*1/2)), (yRightScore+(heightScore*1/2)));
   ball();
 }//End draw
 
