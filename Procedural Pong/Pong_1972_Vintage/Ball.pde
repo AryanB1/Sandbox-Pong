@@ -27,10 +27,10 @@ void ballMove() {
   if ( yBall<=(height*0)+(ballDiameter*1/2) || yBall>=height-(ballDiameter*1/2) ){
     yMove*=-1;
   }
-  if (xBall >= xLeftPaddle+widthPaddle && xBall <= xLeftPaddle+(2*widthPaddle) && yBall <= yLeftPaddle-widthPaddle && yLeftPaddle >= yLeftPaddle+(2*widthPaddle)){
+  if (xBall >= xLeftPaddle+widthPaddle && xBall <= xLeftPaddle+widthPaddle+(ballDiameter*1/2) && yBall >= yLeftPaddle && yBall <= yLeftPaddle+(heightPaddle)){
     xMove *= -1;
   }
-  if (xBall+widthPaddle >= xRightPaddle && xBall <= xRightPaddle+(2*widthPaddle) && yBall <= yLeftPaddle-widthPaddle && yLeftPaddle >= yLeftPaddle+(2*widthPaddle)){
+  if (xBall <= xRightPaddle && xBall >= xRightPaddle-(ballDiameter*1/2) && yBall >= yRightPaddle && yBall <= yRightPaddle+(heightPaddle)){
     xMove *= -1;
   }
   //
