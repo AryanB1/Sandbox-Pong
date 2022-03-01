@@ -1,4 +1,4 @@
-int leftScore = 10, rightScore = 0;
+int leftScore = 0, rightScore = 0;
 void scoreUpdate(){
   if(leftGoalScore == true){
     rightScore += 1;
