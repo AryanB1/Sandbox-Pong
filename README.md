@@ -1,5 +1,7 @@
 # Sandbox-Pong
-## Easter Eggs
- - Change the colour of the ball at a specific level/score
- - Introduce multiple balls at a specific level/score
- - Introduce multiple computer based AI "pongs" at a specific level/score
+## Currently Working on implementing:
+- splash screens (including instructions, screen saver, and win / lose pages)
+## Features:
+- All basic features of pong
+- Score Board
+- Light and Dark mode depending on time of day
