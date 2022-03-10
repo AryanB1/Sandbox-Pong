@@ -3,7 +3,9 @@ Boolean rightGoalScore = false;
 Boolean leftGoalScore = false;
 void ball() {
   ballStart();
-  ballMove();
+  if (screenSaver == false && singlePlayer == false && leftPaddleMovement == true && rightPaddleMovement == true) ballMove();
+  if(screenSaver == true) ballMove();
+  if(singlePlayer == false && leftPaddleMovement == true) ballMove();
 }//End ball()
 
 void ballMove() {
