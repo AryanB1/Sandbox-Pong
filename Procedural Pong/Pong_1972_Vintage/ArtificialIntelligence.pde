@@ -1,5 +1,6 @@
 boolean screenSaver = false;
 boolean singlePlayer = false;
+int screenSaverSpeed = 5;
 void artificalIntelligence(){
   if(key == 'f' || key == 'F') screenSaver = true;
   if(key == 'z' || key == 'Z') screenSaver = false;
@@ -7,8 +8,7 @@ void artificalIntelligence(){
   if(key == 'q' || key == 'Q') singlePlayer = false;
   if(screenSaver == true){
     screenValidity();
-    leftScore = 10;
-    rightScore = 10;
+    screenSaverSpeed = 0;
     yLeftPaddle = yBall-heightPaddle*1/2;
     yRightPaddle = yBall-heightPaddle*1/2;
     if(yLeftPaddle <=0 || yRightPaddle <= 0) {

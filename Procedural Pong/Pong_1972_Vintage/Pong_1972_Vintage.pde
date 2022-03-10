@@ -14,6 +14,7 @@ void setup() {
   frameRate(60);
   population(); //One purpose of developer-written functions
   checkTime();
+  startingInstructions();
 }
 
 void draw() {

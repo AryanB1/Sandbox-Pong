@@ -25,8 +25,6 @@ void population() {
   //int( random( -2, 2) ) biased to 0
   while (xMove==0) xMove = int( random( -2, 2) );
   while (yMove==0) yMove = int( random( -2, 2) );
-  xMove = xMove + leftScore + rightScore;
-  yMove = yMove + leftScore + rightScore;
   /* Below is valid WHILE but might run more code ... please check
   while (xMove==0 || yMove==0) {
     xMove = int( random( -2, 2) );

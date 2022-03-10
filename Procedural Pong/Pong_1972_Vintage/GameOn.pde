@@ -23,5 +23,10 @@ void gameOn() {
   textAlign(CENTER);
   textSize(heightScore*1/2);
   text(rightScore, (xRightScore+(widthScore*1/2)), (yRightScore+(heightScore*1/2)));
+  if(screenSaver == true) {
+    xMove = xMove + screenSaverSpeed;
+    yMove = yMove + screenSaverSpeed;
+    
+  }
   ball();
 }
