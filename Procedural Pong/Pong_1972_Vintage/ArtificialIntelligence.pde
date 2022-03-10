@@ -5,16 +5,7 @@ void artificalIntelligence(){
   if(key == 'z' || key == 'Z') screenSaver = false;
   if(key == 'j' || key == 'J') singlePlayer = true;
   if(key == 'q' || key == 'Q') singlePlayer = false;
-  if(screenSaver == false){
-    if (singlePlayer == true) {
-      screenValidity();
-      yRightPaddle = yBall-heightPaddle*1/2;
-    }
-    else {
-      screenValidity();
-    }
-  }
-  else if(screenSaver == true) {
+  if(screenSaver == true){
     screenValidity();
     leftScore = 10;
     rightScore = 10;
@@ -28,5 +19,13 @@ void artificalIntelligence(){
       yLeftPaddle = displayHeight-heightPaddle;
       yRightPaddle = displayHeight-heightPaddle;  
   }
+  }
+  else if(singlePlayer == true) {
+    yRightPaddle = yBall-heightPaddle*1/2;
+    if(yRightPaddle <= 0) yRightPaddle = 0;
+    if(yRightPaddle >= displayHeight-heightPaddle) yRightPaddle = displayHeight-heightPaddle;
+  }
+  else{
+    screenValidity();
   }
 }

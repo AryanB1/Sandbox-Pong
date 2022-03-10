@@ -5,7 +5,7 @@ void ball() {
   ballStart();
   if (screenSaver == false && singlePlayer == false && leftPaddleMovement == true && rightPaddleMovement == true) ballMove();
   if(screenSaver == true) ballMove();
-  if(singlePlayer == false && leftPaddleMovement == true) ballMove();
+  if(singlePlayer == true && leftPaddleMovement == true) ballMove();
 }//End ball()
 
 void ballMove() {
@@ -14,7 +14,8 @@ void ballMove() {
     rightGoalScore = true;
     xBall = displayWidth*1/2;
     yBall = displayHeight*1/2;
-  } else if (xBall <= x1LeftNet+(ballDiameter*1/2)) {
+  } 
+  else if (xBall <= x1LeftNet+(ballDiameter*1/2)) {
     leftGoalScore = true;
     xBall = displayWidth*1/2;
     yBall = displayHeight*1/2;

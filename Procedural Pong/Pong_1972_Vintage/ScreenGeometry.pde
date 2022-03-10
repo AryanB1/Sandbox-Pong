@@ -4,6 +4,7 @@ void screenValidity(){
     noLoop();
   }
   else {
+    startingInstructions();
     gameOn();
   }
 }
