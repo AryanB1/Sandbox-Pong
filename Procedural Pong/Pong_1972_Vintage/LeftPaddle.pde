@@ -3,16 +3,20 @@ int leftPaddleSpeed;
 boolean moveLeftPaddleDown = true;
 boolean moveLeftPaddleUp = true;
 boolean leftPaddleMovement = false;
+//Start leftPaddleDraw
 void leftPaddleDraw() {
-  leftPaddleStart(); //Might have to move outside draw()
-  //
+  //initializes left paddle
+  leftPaddleStart(); 
+  // Ensures paddle does not move off of screen
   if ( yLeftPaddle < displayHeight*0) moveLeftPaddleUp = false;
   if ( yLeftPaddle+heightPaddle > displayHeight) moveLeftPaddleDown = false;
-  //
-}//End leftPaddle
-
+}
+//End leftPaddleDraw
+//Start leftPaddleKeyPressed
 void leftPaddleKeyPressed() {
+  //Ensures screen saver is not active
   if(screenSaver == false) {
+    //Sets paddle speed based on key press
     if(key=='N' || key=='n') {
       leftPaddleSpeed = 10;
       leftPaddleMovement = true;
@@ -25,18 +29,22 @@ void leftPaddleKeyPressed() {
       leftPaddleSpeed = 30;
       leftPaddleMovement = true;
     }
+    //Moves Paddle Up
     if ( key=='W' && moveLeftPaddleUp == true|| key=='w' && moveLeftPaddleUp == true){ 
-      yLeftPaddle -= leftPaddleSpeed; //yRightPaddle=yRightPaddle-1, yRightPaddle--
+      yLeftPaddle -= leftPaddleSpeed;
       moveLeftPaddleDown = true;
     }
+    //Moves Paddle Down
     if ( key=='S' && moveLeftPaddleDown == true || key=='s' && moveLeftPaddleDown == true){
       yLeftPaddle += leftPaddleSpeed;
       moveLeftPaddleUp = true;
     }
-    if(key =='o' || key == 'O' ) yLeftPaddle = yBall;
   }
-}//End rightPaddlekeyPressed
-
+}
+//End leftPaddleDraw
+//Start leftPaddleStart
 void leftPaddleStart() {
+  //Draw Paddle
   rect(xLeftPaddle, yLeftPaddle, widthPaddle, heightPaddle);
-}//End leftPaddleStart()
+}
+//End leftPaddleStart
