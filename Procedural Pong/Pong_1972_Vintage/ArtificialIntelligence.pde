@@ -4,6 +4,7 @@ boolean singlePlayer = false;
 boolean introScreen = false;
 boolean victory = false;
 boolean verify = true;
+boolean scoreReset = false;
 //Start artificialIntelligence
 void artificalIntelligence(){
   //Determines Victory, and displays victory message
@@ -28,7 +29,16 @@ void artificalIntelligence(){
   //key press if statements
   if(key == 'f' || key == 'F') screenSaver = true;
   if(key == 'z' || key == 'Z') introScreen = true;
-  if(key == 'j' || key == 'J') singlePlayer = true;
+  if(key == 'j' || key == 'J'){ 
+    singlePlayer = true;
+    scoreReset = true;
+  }
+  //Reset Scoreboard
+  if(scoreReset == true){
+    leftScore = 0;
+    rightScore = 0;
+    scoreReset = false;
+  }
   // Comands that are executed as a result of the key presses
   //Universal back button
   if(introScreen == true) {
@@ -36,6 +46,7 @@ void artificalIntelligence(){
     singlePlayer = false;
     leftPaddleMovement = false;
     rightPaddleMovement = false;
+    scoreReset = true;
     victory = false;
     verify = true;
     population();
@@ -60,8 +71,6 @@ void artificalIntelligence(){
   //Runs single player mode
   else if(singlePlayer == true) {
     screenValidity();
-    leftScore = 0;
-    rightScore = 0;
     yRightPaddle = yBall-heightPaddle*1/2;
     if(yRightPaddle <= 0) yRightPaddle = 0;
     if(yRightPaddle >= displayHeight-heightPaddle) yRightPaddle = displayHeight-heightPaddle;
