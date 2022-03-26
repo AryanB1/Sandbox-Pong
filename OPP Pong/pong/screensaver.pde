@@ -5,7 +5,6 @@ class screenSaver {
   }
   void checkSaver() {
     if(key == 'f' || key == 'F') screenSaver = true;
-    if(key == 'z' || key == 'Z') screenSaver = false;
   }
   void activateSaver() {
     paddle.paddleYLeft = int(ball.y)-paddle.paddleHeight*1/2;

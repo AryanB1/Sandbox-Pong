@@ -29,8 +29,18 @@ private class Ball
     ellipse(x, y, diameter, diameter);
     fill(colourReset);
     //
-    move();
-    bounce();
+    if(screensaver.screenSaver == true) {
+      move();
+      bounce();
+    }
+    if(singleplayer.singlePlayer == true && paddle.paddleLeftSpeed == true) {
+      move();
+      bounce();
+    }
+    if(paddle.paddleLeftSpeed == true && paddle.paddleRightSpeed == true){
+      move();
+      bounce();
+    }
     //bouncePaddle(); //See Main void draw
   }//End draw
   //

@@ -33,5 +33,13 @@ class ScoreBoard {
       leftScore += 1;
       rightGoalScore = false;
     }
+    if(leftScore == 5) {
+      println("Congratulations!! left player wins!");
+    
+    }
+    if(rightScore == 5) {
+      println("Congratulations!! right player wins!");
+    
+    }
   }
 }//End ScoreBoard

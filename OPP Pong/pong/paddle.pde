@@ -1,8 +1,8 @@
 class Paddle {
   //Global Variables
   private color colour, colourResetWhite=#000000;
-  private int paddleXLeft, paddleXRight, paddleYLeft, paddleYRight, paddleWidth, paddleHeight, leftPaddleSpeed, rightPaddleSpeed, yMove;
-  private Boolean upLeft, downLeft, upRight, downRight;
+  private int paddleXLeft, paddleXRight, paddleYLeft, paddleYRight, paddleWidth, paddleHeight, leftPaddleSpeed, rightPaddleSpeed, paddleOrigin, yMove;
+  private Boolean upLeft, downLeft, upRight, downRight, paddleLeftSpeed, paddleRightSpeed;
   //
   Paddle (float widthParameter, float heightParameter) { //General Population
     if ( nightmode.nightMode == false ) this.colour = color ( int(random(100, 255)), int(random(50, 255)), int(random(175, 255)) ) ; //random, different
@@ -12,29 +12,34 @@ class Paddle {
     paddleXLeft = int(widthParameter*1/40);
     paddleXRight = int(widthParameter*39/40) - paddleWidth;
     paddleHeight = int(heightParameter*1/4);
-    this.paddleYLeft = int(heightParameter*1/2) - paddleHeight*1/2;
-    this.paddleYRight = paddleYLeft;
+    paddleOrigin = int(heightParameter*1/2) - paddleHeight*1/2;
+    this.paddleYLeft = paddleOrigin;
+    this.paddleYRight = paddleOrigin;
     //Variables to move the paddle
     this.upLeft = false;
     this.downLeft = false;
     this.upRight = false;
     this.downRight = false;
-    
+    this.paddleLeftSpeed = false;
+    this.paddleRightSpeed = false;
   }
   //Sets paddle speed based on key press
-  void paddleMove(){
+  void paddleMoveLeft(){
     if(key=='N' || key=='n') {
       leftPaddleSpeed = 10;
+      this.paddleLeftSpeed = true;
       this.upLeft = true;
       this.downLeft = true;
     }
     if(key=='R'||key=='r'){
       leftPaddleSpeed = 20;
+      this.paddleLeftSpeed = true;
       this.upLeft = true;
       this.downLeft = true;
     }
     if(key=='G'||key=='g'){
       leftPaddleSpeed = 30;
+      this.paddleLeftSpeed = true;
       this.upLeft = true;
       this.downLeft = true;
     }
@@ -52,18 +57,23 @@ class Paddle {
       paddleYLeft += leftPaddleSpeed;
       this.upLeft = true;
     }
-       if(key=='M' || key=='m') {
+  }
+  void paddleMoveRight() {
+   if(key=='M' || key=='m') {
       rightPaddleSpeed = 10;
+      this.paddleRightSpeed = true;
       this.upRight = true;
       this.downRight = true;
     }
     if(key=='t'||key=='T'){
       rightPaddleSpeed = 20;
+      this.paddleRightSpeed = true;
       this.upRight = true;
       this.downRight = true;
     }
     if(key=='h'||key=='H'){
       rightPaddleSpeed = 30;
+      this.paddleRightSpeed = true;
       this.upRight = true;
       this.downRight = true;
     }
@@ -79,7 +89,11 @@ class Paddle {
       paddleYRight += rightPaddleSpeed;
       this.upRight = true;
     }
-  } 
+  }
+  void movement(){
+    if(screensaver.screenSaver == false) paddleMoveLeft();
+    if(screensaver.screenSaver == false && singleplayer.singlePlayer == false) paddleMoveRight();
+  }
   void colourChange() {
     if(Scoreboard.leftGoalScore == true || Scoreboard.rightGoalScore == true ) {
       if ( nightmode.nightMode == false ) this.colour = color ( int(random(100, 255)), int(random(50, 255)), int(random(175, 255)) ) ; //random, different
