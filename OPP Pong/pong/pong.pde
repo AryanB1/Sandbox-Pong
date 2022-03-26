@@ -1,4 +1,4 @@
-// Global Variables & Objects
+// Declaring Objects
 screenSaver screensaver;
 singlePlayer singleplayer;
 nightMode nightmode;
@@ -9,9 +9,13 @@ Instructions Instruction;
 Lines lines;
 screenCheck screencheck;
 reset reset;
+//Start setup()
 void setup(){
+  //Runs game at fullscreen (displayWidth, displayHeight)
   fullScreen();
+  //Locks frameRate
   frameRate(60);
+  //Initializing Objects
   nightmode = new nightMode();
   Instruction = new Instructions();
   Instruction.startingInstructions();
@@ -23,32 +27,40 @@ void setup(){
   screensaver = new screenSaver();
   singleplayer = new singlePlayer();
   reset = new reset();
-}//End setup()
-//Object is garbage collected here
-//
+}
+//End setup()
+//Start draw()
 void draw(){
+  //makes sure screen is in landscape
   screencheck.gameRun();
   if (screencheck.check == false) noLoop();
   else{
+    //draws and updates game visual elements
     background(nightmode.Base);
     paddle.draw();
     Scoreboard.draw();
     lines.draw();
     ball.draw();
+    //Activates screensaver mode
     if(screensaver.screenSaver == true) screensaver.activateSaver();
+    //Activates singleplayer mode
     if(singleplayer.singlePlayer == true) singleplayer.activateSinglePlayer();
+    //resets game
     if(reset.endGame == true) reset.theGreatReset();
   }
-}//End draw()
-//
+}
+//end draw()
+//start keyPressed()
 void keyPressed() {
+  //Sets paddle speeds, and movements
     paddle.movement();
+    // Activates / deactivates nightmode
     nightmode.nightModeKeyPress();
+    //activates screensaver
     screensaver.checkSaver();
+    //activates singleplayer
     singleplayer.checkSinglePlayer();
+    //resets game
     reset.resetCheck();
-}//End keyPressed()
-//
-void mousePressed() {
-
-  }//End Constructor
+}
+//End keyPressed()
