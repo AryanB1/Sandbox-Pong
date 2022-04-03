@@ -15,7 +15,7 @@ class Instructions {
     println("To move the right paddle down, press the down key");
     println("For Left Paddle Speed, Press n (hard), r (normal), g (easy)");
     println("For Right Paddle Speed, Press m (hard), t (normal), h (easy)");
-    println("To reset game press z")
+    println("To reset game press z");
     println("First one to 5 points wins!!");
 }
 //End startingInstructions
