@@ -12,16 +12,15 @@ base code, there would have been a blank screen for a few seconds before
 an image would have been displayed.
 */
 //Global Variables and Objects
-int NumberOfStars = 15; //Verseion of a Static Variable in Pure Java, final here
+int NumberOfStars = 15;
 /*
 NOTE TO SELF:
 If I ever need to update this project to support more stars, change the below 
 array into a hashtable
 */
-Ball[] stars = new Ball[NumberOfStars]; //Processing Requires #, Pure Java allows static variable
-int geometry; //final variable
-//
-//
+Ball[] stars = new Ball[NumberOfStars];
+int geometry;
+//Start setup
 void setup() {
   /*I am using size(displayWidth, displayHeight) because this arrangement
   creates the close and minimize features in the top right corner on windows. 
@@ -67,7 +66,7 @@ void setup() {
     }//End nested FOR
   }//End Final Check
 }//End setup
-//
+//Start draw
 void draw() {
   //Background set to black in order to create the night sky vibe
   background(0);
@@ -76,11 +75,10 @@ void draw() {
     stary.drawStar();
   }//End FOR
 }//End draw
-//
+// start keypressed
 void keyPressed() {
 }//End keyPressed
-//
+// start mousepressed
 void mousePressed() {
 }//End mousePressed
-//
 //End Main Driver
