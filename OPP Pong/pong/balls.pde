@@ -1,12 +1,12 @@
 //Starts private ball class
-private class Ball
+private class Balls
 {
   //Global Variables
   private float x, y, diameter, xStart, yStart, xDirection, yDirection;
   private color colour, colourReset=#FFFFFF;
   private int xSpeed, ySpeed;
   //starts public ball class + constructor
-  public Ball (float widthParameter, float heightParameter) {
+  public Balls (float widthParameter, float heightParameter) {
     //Sets Parameters
     //Ball start locations
     this.x = widthParameter*1/2; 

@@ -9,6 +9,9 @@ Instructions Instruction;
 Lines lines;
 screenCheck screencheck;
 reset reset;
+Balls[] balls = new Balls[5];
+int changes = 0;
+int time = 0;
 //Start setup()
 void setup(){
   //Runs game at fullscreen (displayWidth, displayHeight)
@@ -16,12 +19,19 @@ void setup(){
   //Locks frameRate
   frameRate(60);
   //Initializing Objects
+  time = millis();
   nightmode = new nightMode();
   Instruction = new Instructions();
   Instruction.startingInstructions();
   lines = new Lines(displayWidth, displayHeight);
   Scoreboard = new ScoreBoard(displayWidth, displayHeight);
-  ball = new Ball( displayWidth, displayHeight ); //Start the first ball, need ballCounter
+  ball = new Ball( displayWidth, displayHeight); //Start the first ball, need ballCounter
+
+  for(int i = 0; i < balls.length; i++) {
+    balls[i] = new Balls(displayWidth, displayHeight-(i*(displayHeight/(balls.length+2))));
+    balls[i].ySpeed *= -1;  
+    if(i % 2 == 0) balls[i].xSpeed *= -1;
+}
   paddle = new Paddle( displayWidth, displayHeight);
   screencheck = new screenCheck( displayWidth, displayHeight);
   screensaver = new screenSaver();
@@ -42,9 +52,20 @@ void draw(){
     lines.draw();
     ball.draw();
     //Activates screensaver mode
-    if(screensaver.screenSaver == true) screensaver.activateSaver();
+    if(screensaver.screenSaver == true){
+      screensaver.activateSaver();
+      ball.draw();
+    }
     //Activates singleplayer mode
-    if(singleplayer.singlePlayer == true) singleplayer.activateSinglePlayer();
+    else if(singleplayer.singlePlayer == true){
+      singleplayer.activateSinglePlayer();
+      ball.draw();
+    }
+    else {
+        for(int i = 0; i < balls.length; i++) {
+          balls[i].draw();
+      }
+    }
     //resets game
     if(reset.endGame == true) reset.theGreatReset();
   }
