@@ -21,11 +21,11 @@ class ScoreBoard {
   //Start draw()
   void draw(){
     //Draws scoreboards, and inserts numbers
-    fill(0);
-    stroke(0);
+    fill(nightmode.Base);
+    stroke(nightmode.Base);
     rect(xLeftScore, yLeftScore, widthScore, heightScore);
     rect(xRightScore, yRightScore, widthScore, heightScore);
-    fill(255);
+    fill(nightmode.Contrast);
     textAlign(CENTER);
     textSize(heightScore*1/2);
     text(leftScore, (xLeftScore+(widthScore*1/2)), (yLeftScore+(heightScore*1/2)));

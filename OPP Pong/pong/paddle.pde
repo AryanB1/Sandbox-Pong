@@ -53,19 +53,21 @@ class Paddle {
       this.downLeft = true;
     }
     //Paddle won't go off screen
-    if ( paddleYLeft < displayHeight*0)this.upLeft = false;
-    else this.upLeft = true;
-    if ( paddleYLeft+paddleHeight > displayHeight) this.downLeft = false;
-    else this.downLeft = true;
-    //Moves Paddle Up
-    if ( key=='W' && this.upLeft == true|| key=='w' && this.upLeft == true){ 
-       paddleYLeft -= leftPaddleSpeed;
-       this.downLeft = true;
-      }
-    //Moves Paddle Down
-    if ( key=='S' && this.downLeft == true || key=='s' && this.downLeft == true){
-      paddleYLeft += leftPaddleSpeed;
-      this.upLeft = true;
+    if(Instruction.openInstructions == false){
+      if ( paddleYLeft < displayHeight*0)this.upLeft = false;
+      else this.upLeft = true;
+      if ( paddleYLeft+paddleHeight > displayHeight) this.downLeft = false;
+      else this.downLeft = true;
+      //Moves Paddle Up
+      if ( key=='W' && this.upLeft == true|| key=='w' && this.upLeft == true){ 
+         paddleYLeft -= leftPaddleSpeed;
+         this.downLeft = true;
+        }
+      //Moves Paddle Down
+      if ( key=='S' && this.downLeft == true || key=='s' && this.downLeft == true){
+        paddleYLeft += leftPaddleSpeed;
+        this.upLeft = true;
+    }
     }
   }
   // End paddleMoveLeft()
@@ -130,8 +132,8 @@ class Paddle {
     //Changes colour
     colourChange();
     fill(colour);
-    //Draws paddle
-    rect(paddleXLeft, paddleYLeft, paddleWidth, paddleHeight);
+    //Draws paddle and reduces paddle size based on the players score
+    rect(paddleXLeft, paddleYLeft, paddleWidth, paddleHeight-(Scoreboard.leftScore*10));
     fill(colourResetWhite);
   }
   //End leftPaddle
@@ -141,7 +143,7 @@ class Paddle {
     colourChange();
     fill(colour);
     //Draws paddle
-    rect(paddleXRight, paddleYRight, paddleWidth, paddleHeight);
+    rect(paddleXRight, paddleYRight, paddleWidth, paddleHeight-(Scoreboard.rightScore*10));
     fill(colourResetWhite);
   }
   //End rightPaddle

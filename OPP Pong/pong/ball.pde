@@ -38,6 +38,37 @@ private class Ball
     while ( yDirection == 0) this.yDirection = int ( random (-2, 2) );
   }
   //End Constructor + public ball class
+  public Ball (float widthParameter, float heightParameter, float diameterParameter) {
+    //Sets Parameters
+    //Ball start locations
+    this.x = widthParameter*1/2; 
+    this.y = heightParameter*1/2;
+    xStart = widthParameter*1/2; 
+    yStart = heightParameter*1/2;
+    //ball diameter
+    diameter = widthParameter*1/70; //same on all of them
+    //For the colours, everything is randomized between 100 and 200
+    //This is because through testing, I found that the 0-100, 200-255 range was a bit too solid
+    //In comparison, since the 100-200 range is smaller, all the colours have a relatively similar level of colour solidness
+    //This in turn makes it easier on the eyes
+    //Also the night mode commonly creates a greenish color which gives a hacker vibe
+    if ( nightmode.nightMode == false ) this.colour = color( random(100, 200), random(100, 200), random(100, 200) );
+    if ( nightmode.nightMode == true ) this.colour = color( random(100, 200), random(100, 200), 0 ); //Third number set to 0 for ease on eyes.
+    //sets x speed
+    this.xSpeed = ((Scoreboard.leftScore+Scoreboard.rightScore)*1/4)+2;
+    //sets y speed
+    this.ySpeed = ((Scoreboard.leftScore+Scoreboard.rightScore)*1/4)+2;
+    //sets xDirection
+    this.xDirection = 0;
+    //For this piece of code, I only changed it so that it fit on one line.
+    //Overall this is the best algorithm for this specific task.
+    while ( xDirection == 0) this.xDirection = int ( random (-2, 2) );
+    //sets yDirection
+    this.yDirection = 0;
+    //For this piece of code, I only changed it so that it fit on one line.
+    //Overall this is the best algorithm for this specific task.
+    while ( yDirection == 0) this.yDirection = int ( random (-2, 2) );
+  }
   //start draw()
   public void draw() {
     //Fills ball with colour
@@ -66,8 +97,10 @@ private class Ball
   //start move()
   private void move() {
     //Moves ball
+    if(Instruction.openInstructions == false){
     x += xSpeed;
     y += ySpeed;
+    }
   }
   //End move()
   //Starts Bounce

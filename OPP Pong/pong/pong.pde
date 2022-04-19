@@ -9,7 +9,7 @@ Instructions Instruction;
 Lines lines;
 screenCheck screencheck;
 reset reset;
-Balls[] balls = new Balls[5];
+Ball[] balls = new Ball[2];
 int changes = 0;
 int time = 0;
 //Start setup()
@@ -28,7 +28,7 @@ void setup(){
   ball = new Ball( displayWidth, displayHeight); //Start the first ball, need ballCounter
 
   for(int i = 0; i < balls.length; i++) {
-    balls[i] = new Balls(displayWidth, displayHeight-(i*(displayHeight/(balls.length+2))));
+    balls[i] = new Ball(displayWidth, displayHeight-(i*(displayHeight/(balls.length+2))), 1);
     balls[i].ySpeed *= -1;  
     if(i % 2 == 0) balls[i].xSpeed *= -1;
 }
@@ -50,7 +50,6 @@ void draw(){
     paddle.draw();
     Scoreboard.draw();
     lines.draw();
-    ball.draw();
     //Activates screensaver mode
     if(screensaver.screenSaver == true){
       screensaver.activateSaver();
@@ -66,6 +65,7 @@ void draw(){
           balls[i].draw();
       }
     }
+    if (Instruction.openInstructions == true) Instruction.draw();
     //resets game
     if(reset.endGame == true) reset.theGreatReset();
   }
@@ -73,6 +73,8 @@ void draw(){
 //end draw()
 //start keyPressed()
 void keyPressed() {
+  //Opens and closes instructions
+  Instruction.openInstructions(); 
   //Sets paddle speeds, and movements
     paddle.movement();
     // Activates / deactivates nightmode
