@@ -2,9 +2,12 @@
 private class Ball
 {
   //Global Variables
-  private float x, y, diameter, xStart, yStart, xDirection, yDirection;
+  private float x, y, diameter, xStart, yStart;
   private color colour, colourReset=#FFFFFF;
   private int xSpeed, ySpeed;
+  public int targetX, targetY;
+  public boolean xTargetSet=false, yTargetSet=false, mouseStop=false, blackholeStop=false;
+  public int numBalls =1;
   //starts public ball class + constructor
   public Ball (float widthParameter, float heightParameter) {
     //Sets Parameters
@@ -26,16 +29,6 @@ private class Ball
     this.xSpeed = ((Scoreboard.leftScore+Scoreboard.rightScore)*1/4)+2;
     //sets y speed
     this.ySpeed = ((Scoreboard.leftScore+Scoreboard.rightScore)*1/4)+2;
-    //sets xDirection
-    this.xDirection = 0;
-    //For this piece of code, I only changed it so that it fit on one line.
-    //Overall this is the best algorithm for this specific task.
-    while ( xDirection == 0) this.xDirection = int ( random (-2, 2) );
-    //sets yDirection
-    this.yDirection = 0;
-    //For this piece of code, I only changed it so that it fit on one line.
-    //Overall this is the best algorithm for this specific task.
-    while ( yDirection == 0) this.yDirection = int ( random (-2, 2) );
   }
   //End Constructor + public ball class
   public Ball (float widthParameter, float heightParameter, float diameterParameter) {
@@ -58,16 +51,6 @@ private class Ball
     this.xSpeed = ((Scoreboard.leftScore+Scoreboard.rightScore)*1/4)+2;
     //sets y speed
     this.ySpeed = ((Scoreboard.leftScore+Scoreboard.rightScore)*1/4)+2;
-    //sets xDirection
-    this.xDirection = 0;
-    //For this piece of code, I only changed it so that it fit on one line.
-    //Overall this is the best algorithm for this specific task.
-    while ( xDirection == 0) this.xDirection = int ( random (-2, 2) );
-    //sets yDirection
-    this.yDirection = 0;
-    //For this piece of code, I only changed it so that it fit on one line.
-    //Overall this is the best algorithm for this specific task.
-    while ( yDirection == 0) this.yDirection = int ( random (-2, 2) );
   }
   //start draw()
   public void draw() {
@@ -89,8 +72,11 @@ private class Ball
     }
     //Checks for a defined left and right paddle speed
     if(paddle.paddleLeftSpeed == true && paddle.paddleRightSpeed == true){
-      move();
-      bounce();
+      pointChase();
+      if(xTargetSet == false && yTargetSet == false){
+        move();
+        bounce();
+      }
     }
   }
   //End draw()
@@ -136,6 +122,54 @@ private class Ball
       Scoreboard.leftGoalScore = true;
   }
   }
-  // end bounce()
+  //End bouce
+  // Chase Metaphor.
+  //Start setTargetX
+  void setTargetX(int iParameter) {
+    if(mouseStop == false){
+      targetX = iParameter;
+      xTargetSet = true;
+    }
+  }//End setTargetX
+  // Start setTargetY
+  void setTargetY(int iParameter) {
+    if(mouseStop == false){
+      targetY = iParameter;
+      yTargetSet = true;
+    }
+  }
+  //End setTargetY
+  //Start pointChase
+  void pointChase() {
+    //sets movement to a target location if a click has been made
+    if(xTargetSet == true || yTargetSet == true){
+      float xNeeded = x - targetX;
+      float yNeeded = y - targetY;
+      mouseStop = true;
+      xNeeded = xNeeded/20;
+      yNeeded = yNeeded/20;
+      if ( x != targetX) x -= xNeeded;
+      if(y != targetY) y -= yNeeded;
+      //Due to the nature of the algorithm, it will infinitely move close to the point clicked
+      //This correction is set, so if the ball is somewhat close to the point clicked, the ball
+      //then moves normally. 
+      if(x >= targetX-5 && x < targetX || x <= targetX+5 && x > targetX) xTargetSet = false;
+      if(y >= targetY-5 && y < targetY || y <= targetY+5 && y > targetY) yTargetSet = false;
+    }
 }
-  //End Ball class
+//End pointChase
+//End Chase Metaphor
+//Start nums
+  void nums() {
+    if(key == '1') numBalls = 1;
+    if(key == '2') numBalls = 2;
+    if(key == '3') numBalls = 3;
+    if(key == '4') numBalls = 4;
+    if(key == '5') numBalls = 5;
+    if(key == '6') numBalls = 6;
+    if(key == '7') numBalls = 7;
+    if(key == '8') numBalls = 8;
+    if(key == '9') numBalls = 9;
+  }
+  //End nums
+}//End Ball class

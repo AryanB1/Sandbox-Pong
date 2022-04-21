@@ -16,6 +16,7 @@ class Instructions {
   "For Left Paddle Speed, Press n (hard), r (normal), g (easy)",
   "For Right Paddle Speed, Press m (hard), t (normal), h (easy)",
   "To reset game press z",
+  "Click any number key beteween 1-9 if you want to add or remove balls (there is one ball by default)",
   "A point is scored by getting a point into the enemy players net, or in the case of single player mode, hitting the ball", 
   "First one to 5 points wins!!",
   "Press v to close this window. It can be reopened at any time with the k key",
@@ -29,9 +30,6 @@ class Instructions {
     hei = displayHeight*35/40;
     openInstructions = true;
   }
-  void startingInstructions() {
-    println(instructions[0]);
-}
 //End startingInstructions
   void draw(){
     fill(nightmode.Base);
