@@ -103,16 +103,16 @@ void draw(){
     //paddle.drawEasterEgg();
     lines.draw();
     if(ball.start == true) startFireworks = true;
-    if(startFireworks == true){
-      print(2);
-      for (int i=0; i<fireworks.length; i++) {
-        print(1);
-        fireworks[i].fireworkStep();
-        fireworks[i].fireworkBounce();
-        fireworks[i].fireworkDraw();
-      startFireworks = false;
-  }//End FOR
-    }
+    //if(startFireworks == true){
+     // print(2);
+      //for (int i=0; i<fireworks.length; i++) {
+       // print(1);
+   //     fireworks[i].fireworkStep();
+     //   fireworks[i].fireworkBounce();
+       // fireworks[i].fireworkDraw();
+     // startFireworks = false;
+  //}//End FOR
+    //}
     if(ball.numBalls > balls.size()) {
       balls.add(new Ball(displayWidth, (ball.y + balls.size()*50)*2, 1));
       if(balls.size() % 2 == 0) balls.get(balls.size()-1).xSpeed *= -1;  
