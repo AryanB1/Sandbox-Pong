@@ -12,7 +12,7 @@ class ScoreBoard {
     yLeftScore = heightBoard*0;
     xRightScore = (widthBoard*3/4) - (widthScore*1/2);
     yRightScore = heightBoard*0;
-    this.leftScore = 0;
+    this.leftScore = 3;
     this.rightScore = 0;
     this.leftGoalScore = false;
     this.leftGoalScore = false;

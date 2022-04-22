@@ -8,6 +8,10 @@ private class Ball
   public int targetX, targetY, blackHoleX, blackHoleY;
   public boolean xTargetSet=false, yTargetSet=false, mouseStop=false, blackholeStop=false, xBlackHoleSet=false, yBlackHoleSet=false, changeNums = true;
   public int numBalls =1;
+  float fireSpeedX;
+  float fireSpeedY;
+  float gravity;
+  boolean start;
   //starts public ball class + constructor
   public Ball (float widthParameter, float heightParameter) {
     //Sets Parameters
@@ -64,6 +68,20 @@ private class Ball
     //This in turn makes it easier on the eyes
     //Also the night mode commonly creates a greenish color which gives a hacker vibe
     colour = color( random(100, 200), random(100, 200), random(100, 200) );
+  }
+  public Ball (float widthParameter, float heightParameter, float diameterParameter, float paramfour, float paramfive) {
+     //Fixed issue, the firework array now is not visible in the corner. 
+    this.x = displayWidth*2;
+    this.y = displayHeight*5;
+    if(start == true){
+      this.x = width*1/2;
+      this.y = height*1/2;
+    }
+    this.colour = color (random(255), random(255), random(255) );
+    this.diameter = random (width*1/150, width*1/30);
+    this.fireSpeedX = random (-5, 5);
+    this.fireSpeedY = random (-5, 5);
+    gravity = 0.5;
   }
   //start draw()
   public void draw() {
@@ -134,7 +152,9 @@ private class Ball
         for(int i = 0; i < balls.size(); i ++) {
           balls.get(i).x = xStart; 
           balls.get(i).y = (ball.y + i*50);
-        Scoreboard.rightGoalScore = true;
+          start = true;
+          println("Left player Scored!!!");
+          Scoreboard.rightGoalScore = true;
         }
         }
     } 
@@ -149,6 +169,8 @@ private class Ball
       for(int i = 0; i < balls.size(); i ++) {
         balls.get(i).x = xStart; 
         balls.get(i).y = (ball.y + i*50);
+        start = true;
+        println("Right player Scored!!!");
         Scoreboard.leftGoalScore = true;
       }
   }
@@ -187,7 +209,6 @@ private class Ball
       //then moves normally. 
       if(x >= targetX-5 && x < targetX || x <= targetX+5 && x > targetX) xTargetSet = false;
       if(y >= targetY-5 && y < targetY || y <= targetY+5 && y > targetY) yTargetSet = false;
-      println(xTargetSet);
     }
 }
 //End pointChase
@@ -236,5 +257,30 @@ private class Ball
 }
   }
   //End Black Hole
+  //Start Firework metaphor stuff.
+    void fireworkStep() {
+    x += fireSpeedX*3;
+    y += fireSpeedY;
+    fireSpeedY += gravity;
+  }//End step()
+
+  void fireworkBounce() {
+    if (y < 0+diameter*1/2 || y > height-diameter*1/2) { //
+      fireSpeedY = fireSpeedY*-1;
+      if(fireSpeedX > 0 && fireSpeedX < 2.5) fireSpeedX = 12;
+      if(fireSpeedX < 0 && fireSpeedX > -2.5) fireSpeedX = -12;
+    }//End height bounces
+    if (x < 0+diameter*1/2 || x > width-diameter*1/2) {
+      diameter = 0;
+    }// End left and right bounces
+  }//End bounce()
+
+  void fireworkDraw() {
+    fill(colour);
+    ellipse(x, y, diameter, diameter);
+    fill(0);
+  }//End fireworkdraw()
+  //End firework metaphor stuff. 
+  
 }
 //End Ball class

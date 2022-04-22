@@ -12,9 +12,10 @@ Victory victory;
 ArrayList<Ball> balls;
 ArrayList<Paddle> paddles;
 Ball[] stars= new Ball[25];
+Ball[] fireworks = new Ball[25];
 reset reset;
 int changes = 0;
-boolean runBlackholeOnce = true, runChaseOnce = true;
+boolean runBlackholeOnce = true, runChaseOnce = true, startFireworks = false;
 //Start setup()
 void setup(){
   //Runs game at fullscreen (displayWidth, displayHeight)
@@ -40,6 +41,9 @@ void setup(){
   singleplayer = new singlePlayer();
   victory = new Victory();
   reset = new reset();
+  for (int i=0; i<fireworks.length; i++) {
+    fireworks[i] = new Ball(width, height, 0, 0, 0);
+  }
   int geometry = ( displayWidth <= displayHeight ) ? displayWidth : displayHeight;
     //
   for (int i=0; i<stars.length; i++) {
@@ -98,12 +102,26 @@ void draw(){
     Scoreboard.draw();
     //paddle.drawEasterEgg();
     lines.draw();
+    if(ball.start == true) startFireworks = true;
+    if(startFireworks == true){
+      print(2);
+      for (int i=0; i<fireworks.length; i++) {
+        print(1);
+        fireworks[i].fireworkStep();
+        fireworks[i].fireworkBounce();
+        fireworks[i].fireworkDraw();
+      startFireworks = false;
+  }//End FOR
+    }
     if(ball.numBalls > balls.size()) {
       balls.add(new Ball(displayWidth, (ball.y + balls.size()*50)*2, 1));
       if(balls.size() % 2 == 0) balls.get(balls.size()-1).xSpeed *= -1;  
       if(balls.size() % 3 == 1) balls.get(balls.size()-1).ySpeed *= -1;  
   }
     if(ball.numBalls < balls.size()) balls.remove(balls.size()-1);
+    if(runBlackholeOnce == false) {
+      if(balls.size() > 1) balls.remove(balls.size()-1);
+    }
     //Activates screensaver mode
     if(screensaver.screenSaver == true){
       screensaver.activateSaver();

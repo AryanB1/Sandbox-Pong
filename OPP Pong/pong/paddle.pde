@@ -42,22 +42,20 @@ class Paddle {
     if ( nightmode.nightMode == true ) this.colour = color ( int(random(80, 220)), int(random(80, 220)), 0 ) ; 
     //Assigning Values
     paddleWidth = int(widthParameter*1/80); 
-    paddleOrigin = 0;
-    //Left Side
-    if(leftOrRight == 1){
-      paddleXLeft = int(widthParameter*1/40);
-      paddleYLeft = paddleOrigin;
-    }
-    //Right Side
-    if(leftOrRight == 2){
-      paddleXRight = int(widthParameter*39/40) - paddleWidth;
-      paddleYRight = paddleOrigin;}
-    //Something to initialize the array with in the setup so processing doesn't error. 
-    if(leftOrRight == 3) {
-      paddleXRight = int(widthParameter*15);
-      paddleYRight = int(widthParameter*25);
-    }
+    paddleXLeft = int(widthParameter*1/40);
+    paddleXRight = int(widthParameter*39/40) - paddleWidth;
     paddleHeight = int(heightParameter*1/4);
+    paddleOrigin = int(heightParameter*1/2) - paddleHeight*1/2;
+    //Paddles Start middle
+    this.paddleYLeft = paddleOrigin;
+    this.paddleYRight = paddleOrigin;
+    //Variables to move the paddle and select speed
+    this.upLeft = false;
+    this.downLeft = false;
+    this.upRight = false;
+    this.downRight = false;
+    this.paddleLeftSpeed = false;
+    this.paddleRightSpeed = false;
   }
   //End Constructor
   //Start paddleMoveLeft() -- as title suggests, handles left paddle movement. 
