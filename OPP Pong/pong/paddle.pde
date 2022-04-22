@@ -30,6 +30,35 @@ class Paddle {
     this.paddleLeftSpeed = false;
     this.paddleRightSpeed = false;
   }
+  //This paddle constructor is an easter egg when the score is one for either the left or right player
+  //After a closer look, implementing my planned easter egg would just make my game look buggy rather than cool
+  Paddle (float widthParameter, float heightParameter, int leftOrRight) {
+    //For the colours, everything is randomized between 80 and 220
+    //This is because through testing, I found that the 0-80, 220-255 range was a bit too solid
+    //In comparison, since the 80-220 range is smaller, all the colours have a relatively similar level of colour solidness
+    //This in turn makes it easier on the eyes
+    //This range is slightly larger than the ball class, because it would be boring if everything was the same
+    if ( nightmode.nightMode == false ) this.colour = color ( int(random(80, 220)), int(random(80, 220)), int(random(80, 220)) ) ; 
+    if ( nightmode.nightMode == true ) this.colour = color ( int(random(80, 220)), int(random(80, 220)), 0 ) ; 
+    //Assigning Values
+    paddleWidth = int(widthParameter*1/80); 
+    paddleOrigin = 0;
+    //Left Side
+    if(leftOrRight == 1){
+      paddleXLeft = int(widthParameter*1/40);
+      paddleYLeft = paddleOrigin;
+    }
+    //Right Side
+    if(leftOrRight == 2){
+      paddleXRight = int(widthParameter*39/40) - paddleWidth;
+      paddleYRight = paddleOrigin;}
+    //Something to initialize the array with in the setup so processing doesn't error. 
+    if(leftOrRight == 3) {
+      paddleXRight = int(widthParameter*15);
+      paddleYRight = int(widthParameter*25);
+    }
+    paddleHeight = int(heightParameter*1/4);
+  }
   //End Constructor
   //Start paddleMoveLeft() -- as title suggests, handles left paddle movement. 
   void paddleMoveLeft(){
@@ -147,5 +176,9 @@ class Paddle {
     fill(colourResetWhite);
   }
   //End rightPaddle
+  void drawEasterEgg() {
+    if(Scoreboard.leftScore == 1 && downLeft == false || Scoreboard.rightScore == 1 && downLeft == false) paddles.add(new Paddle(displayWidth, displayHeight, 1));
+    if(Scoreboard.leftScore == 1 && downRight == false || Scoreboard.rightScore == 1 && downRight == false) paddles.add(new Paddle(displayWidth, displayHeight, 2));
+  }
 }
 //End Paddle class

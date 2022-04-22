@@ -29,6 +29,7 @@ void mousePressed() {
   for (int i=0; i<stars.length; i++) {
     stars[i].setTargetX(mouseX); //Value of mouse-click
     stars[i].setTargetY(mouseY); //Value of mouse-click
+    redo = false;
   }//End FOR
 }//End mousePressed
 //End Main Driver

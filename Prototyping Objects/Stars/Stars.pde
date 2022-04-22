@@ -12,7 +12,7 @@ base code, there would have been a blank screen for a few seconds before
 an image would have been displayed.
 */
 //Global Variables and Objects
-int NumberOfStars = 15;
+int NumberOfStars = 25;
 /*
 NOTE TO SELF:
 If I ever need to update this project to support more stars, change the below 
@@ -27,7 +27,7 @@ void setup() {
  This provides a better quality of life for user. Any future versions of pong
  will contain a key to choose between fullScreen() and size(displayWidth, displayHeight)
  */
-  size(displayWidth, displayHeight);
+  fullScreen();
   geometry = ( displayWidth <= displayHeight ) ? displayWidth : displayHeight;
   //
   for (int i=0; i<stars.length; i++) {

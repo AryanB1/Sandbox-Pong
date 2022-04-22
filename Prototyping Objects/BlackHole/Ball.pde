@@ -54,7 +54,7 @@ private class Ball
       //if a large number of balls are created
       if(x >= targetX-0.5 && x < targetX || x <= targetX+0.5 && x > targetX) x = targetX;
       if(y >= targetY-0.5 && y < targetY || y <= targetY+0.5 && y > targetY) y = targetY;
-      if(x == targetX && Y == targetY) colour = 0;
+      if(x == targetX && y == targetY) x = displayWidth*7;
     }
   }
   //

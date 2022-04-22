@@ -5,8 +5,8 @@ private class Ball
   private float x, y, diameter, xStart, yStart;
   private color colour, colourReset=#FFFFFF;
   private int xSpeed, ySpeed;
-  public int targetX, targetY;
-  public boolean xTargetSet=false, yTargetSet=false, mouseStop=false, blackholeStop=false;
+  public int targetX, targetY, blackHoleX, blackHoleY;
+  public boolean xTargetSet=false, yTargetSet=false, mouseStop=false, blackholeStop=false, xBlackHoleSet=false, yBlackHoleSet=false, changeNums = true;
   public int numBalls =1;
   //starts public ball class + constructor
   public Ball (float widthParameter, float heightParameter) {
@@ -52,6 +52,19 @@ private class Ball
     //sets y speed
     this.ySpeed = ((Scoreboard.leftScore+Scoreboard.rightScore)*1/4)+2;
   }
+  public Ball (float widthParameter, float heightParameter, float diameterParameter, float paramfour) {
+    //Sets Parameters
+    //Ball start locations
+    x = int ( widthParameter ); //casting here is truncating decimals
+    y = int ( heightParameter );
+    diameter = int ( diameterParameter );
+    //For the colours, everything is randomized between 100 and 200
+    //This is because through testing, I found that the 0-100, 200-255 range was a bit too solid
+    //In comparison, since the 100-200 range is smaller, all the colours have a relatively similar level of colour solidness
+    //This in turn makes it easier on the eyes
+    //Also the night mode commonly creates a greenish color which gives a hacker vibe
+    colour = color( random(100, 200), random(100, 200), random(100, 200) );
+  }
   //start draw()
   public void draw() {
     //Fills ball with colour
@@ -73,7 +86,8 @@ private class Ball
     //Checks for a defined left and right paddle speed
     if(paddle.paddleLeftSpeed == true && paddle.paddleRightSpeed == true){
       pointChase();
-      if(xTargetSet == false && yTargetSet == false){
+      blackHole();
+      if(xTargetSet == false && yTargetSet == false && xBlackHoleSet == false && yBlackHoleSet == false){
         move();
         bounce();
       }
@@ -111,15 +125,33 @@ private class Ball
     }
       //Checks if ball hits right net
     if (x >= lines.x1RightNet-(diameter*1/2)) {
-      this.x = xStart;
-      this.y = yStart;
-      Scoreboard.rightGoalScore = true;
+      if(singleplayer.singlePlayer == true){
+        this.x = xStart;
+        this.y = yStart;
+        Scoreboard.rightGoalScore = true;
+      }
+      else{
+        for(int i = 0; i < balls.size(); i ++) {
+          balls.get(i).x = xStart;
+          balls.get(i).y = yStart;
+          Scoreboard.rightGoalScore = true;
+        }
+      }
     } 
     // Checks if ball hits left net
     if (x <= lines.x1LeftNet+(diameter*1/2)) {
-      this.x = xStart;
-      this.y = yStart;
-      Scoreboard.leftGoalScore = true;
+      if(singleplayer.singlePlayer == true){
+        this.x = xStart;
+        this.y = yStart;
+        Scoreboard.leftGoalScore = true;
+      }
+    else{
+      for(int i = 0; i < balls.size(); i ++) {
+        balls.get(i).x = xStart;
+        balls.get(i).y = yStart;
+        Scoreboard.leftGoalScore = true;
+      }
+  }
   }
   }
   //End bouce
@@ -155,21 +187,92 @@ private class Ball
       //then moves normally. 
       if(x >= targetX-5 && x < targetX || x <= targetX+5 && x > targetX) xTargetSet = false;
       if(y >= targetY-5 && y < targetY || y <= targetY+5 && y > targetY) yTargetSet = false;
+      println(xTargetSet);
     }
 }
 //End pointChase
 //End Chase Metaphor
-//Start nums
+//Start nums ( adds / removes balls based on key inputs)
   void nums() {
-    if(key == '1') numBalls = 1;
-    if(key == '2') numBalls = 2;
-    if(key == '3') numBalls = 3;
-    if(key == '4') numBalls = 4;
-    if(key == '5') numBalls = 5;
-    if(key == '6') numBalls = 6;
-    if(key == '7') numBalls = 7;
-    if(key == '8') numBalls = 8;
-    if(key == '9') numBalls = 9;
+    if(changeNums == true){
+      if(key == '1') numBalls = 1;
+      if(key == '2') numBalls = 2;
+      if(key == '3') numBalls = 3;
+      if(key == '4') numBalls = 4;
+      if(key == '5') numBalls = 5;
+      if(key == '6') numBalls = 6;
+      if(key == '7') numBalls = 7;
+      if(key == '8') numBalls = 8;
+      if(key == '9') numBalls = 9;
+    }
   }
   //End nums
-}//End Ball class
+  
+  void setBlackHoleX(int iParameter) {
+    if(blackholeStop == false){
+      blackHoleX = iParameter;
+      xBlackHoleSet = true;
+    }
+  }//End setTargetX
+  // Start setBlackHoleY
+  void setBlackHoleY(int iParameter) {
+    if(blackholeStop == false){
+      blackHoleY = iParameter;
+      yBlackHoleSet = true;
+    }
+  }
+  //What this metaphor is accomplishing
+  //is it sets one ball to the position clicked and then causes
+  //all other balls to disappear for a moment and then reappear at their start points.
+  void blackHole() {
+    //sets movement to a target location if a click has been made
+    if(xBlackHoleSet == true || yBlackHoleSet == true){
+      blackholeStop = true;
+      x = blackHoleX;
+      y = blackHoleY;
+      while(balls.size() > 1) balls.remove(balls.size()-1);
+      xBlackHoleSet = false;
+      yBlackHoleSet = false;
+}
+  }
+  void setStars() {
+    int geometry = ( displayWidth <= displayHeight ) ? displayWidth : displayHeight;
+    //
+    for (int i=0; i<stars.length; i++) {
+      //Randomly choose parameters
+      float diameterRandom = random ( geometry*1/8, geometry*1/4); //Consider user Input (eye sentitivity)
+      float xRandom = random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 ); //No stars in net
+      float yRandom = random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 ); //Entire displayHeight OK
+      stars[i] = new Ball (xRandom, yRandom, diameterRandom);
+      /* Switched the loops to normal if statements, since the loops seemed
+      unnecessary, and the if statements are more efficient
+      */ 
+      if ( xRandom-diameterRandom*1/2 > stars[i].x && xRandom+diameterRandom*1/2 < stars[i].x ) {
+        xRandom = random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 );
+        stars[i] = new Ball (xRandom, yRandom, diameterRandom);
+        }
+      if ( yRandom-diameterRandom*1/2 > stars[i].x && yRandom+diameterRandom*1/2 < stars[i].x ) {
+        yRandom = random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 );
+        stars[i] = new Ball (xRandom, yRandom, diameterRandom);
+      //
+    }//End FOR
+    }
+    for (int i=0; i<stars.length; i++) {
+    for ( int j=stars.length-1; j>i; j--) {
+      /*Checks distance between stars and then ensures that the distance is greater
+       than the average diameter of the two stars. If the average diameter is larger
+       than the distance, a new ball is made, and the algorithm repeats
+      */
+      if(dist(stars[i].x, stars[i].y, stars[j].x, stars[j].y) <= ((stars[i].diameter+stars[j].diameter)*1/2)){
+        float diameterRandom = random ( geometry*1/8, geometry*1/4); //Consider user Input (eye sentitivity)
+        float xRandom = random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 ); //No stars in net
+        float yRandom = random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 ); //Entire displayHeight OK
+        stars[i] = new Ball (xRandom, yRandom, diameterRandom);
+        i = 0;
+        j = stars.length;
+      }
+      }//End nested FOR
+    }
+}
+}
+//End Ball class
