@@ -12,7 +12,7 @@ class ScoreBoard {
     yLeftScore = heightBoard*0;
     xRightScore = (widthBoard*3/4) - (widthScore*1/2);
     yRightScore = heightBoard*0;
-    this.leftScore = 3;
+    this.leftScore = 0;
     this.rightScore = 0;
     this.leftGoalScore = false;
     this.leftGoalScore = false;
@@ -40,15 +40,6 @@ class ScoreBoard {
     if(rightGoalScore == true){
       leftScore += 1;
       rightGoalScore = false;
-    }
-    //Ends game, and prints congratulations msg
-    if(leftScore == 5) {
-      println("Congratulations!! left player wins!");
-      reset.endGame = true;
-    }
-    if(rightScore == 5) {
-      println("Congratulations!! right player wins!");
-      reset.endGame = true;
     }
   }
   //End draw()

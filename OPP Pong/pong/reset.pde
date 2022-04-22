@@ -43,6 +43,5 @@ class reset {
   // End theGreatReset()
 }
 //End reset class
-//Night Sky Game win stuff, new constructor -> copy code -> call it in a way such that the background is overrw
 //Fireworks for goals
 //Increase in speed near paddle

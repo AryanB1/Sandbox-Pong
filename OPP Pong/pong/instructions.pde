@@ -22,7 +22,7 @@ class Instructions {
   "Press v to close this window. It can be reopened at any time with the k key",
   "You can also use the k key to take a break"
 };
-  //Start startingInstructions
+  //Start constructor
   Instructions() {
     x = displayWidth*3/40;
     y = displayHeight*3/40;
@@ -30,7 +30,7 @@ class Instructions {
     hei = displayHeight*35/40;
     openInstructions = true;
   }
-//End startingInstructions
+//End constructor
   void draw(){
     fill(nightmode.Base);
     rect(x, y, wid, hei);

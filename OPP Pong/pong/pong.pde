@@ -8,6 +8,7 @@ Paddle paddle;
 Instructions Instruction;
 Lines lines;
 screenCheck screencheck;
+Victory victory;
 ArrayList<Ball> balls;
 ArrayList<Paddle> paddles;
 Ball[] stars= new Ball[25];
@@ -28,7 +29,7 @@ void setup(){
   ball = new Ball( displayWidth, displayHeight); //Start the first ball, need ballCounter
   balls = new ArrayList<Ball>();
   //for(int i = 0; i < balls.length; i++) {
-  balls.add(new Ball(displayWidth, displayHeight-(displayHeight/2), 1));//balls[i] = new Ball(displayWidth, displayHeight-(i*(displayHeight/(balls.length+2))), 1);
+  balls.add(new Ball(displayWidth, displayHeight, 1));//balls[i] = new Ball(displayWidth, displayHeight-(i*(displayHeight/(balls.length+2))), 1);
  // paddles.add(new Paddle(displayWidth, displayHeight, 3));
    // if(i % 2 == 1) balls[i].ySpeed *= -1;  
     //if(i % 2 == 0) balls[i].xSpeed *= -1;
@@ -37,8 +38,45 @@ void setup(){
   screencheck = new screenCheck( displayWidth, displayHeight);
   screensaver = new screenSaver();
   singleplayer = new singlePlayer();
+  victory = new Victory();
   reset = new reset();
-//  stars.setStars();
+  int geometry = ( displayWidth <= displayHeight ) ? displayWidth : displayHeight;
+    //
+  for (int i=0; i<stars.length; i++) {
+      //Randomly choose parameters
+      float diameterRandom = random ( geometry*1/8, geometry*1/4); //Consider user Input (eye sentitivity)
+      float xRandom = random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 ); //No stars in net
+      float yRandom = random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 ); //Entire displayHeight OK
+      stars[i] = new Ball (xRandom, yRandom, diameterRandom, 0);
+      /* Switched the loops to normal if statements, since the loops seemed
+      unnecessary, and the if statements are more efficient
+      */ 
+      if ( xRandom-diameterRandom*1/2 > stars[i].x && xRandom+diameterRandom*1/2 < stars[i].x ) {
+        xRandom = random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 );
+        stars[i] = new Ball (xRandom, yRandom, diameterRandom, 0);
+        }
+      if ( yRandom-diameterRandom*1/2 > stars[i].x && yRandom+diameterRandom*1/2 < stars[i].x ) {
+        yRandom = random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 );
+        stars[i] = new Ball (xRandom, yRandom, diameterRandom, 0);
+      //
+    }//End FOR
+    }
+    for (int i=0; i<stars.length; i++) {
+    for ( int j=stars.length-1; j>i; j--) {
+      /*Checks distance between stars and then ensures that the distance is greater
+       than the average diameter of the two stars. If the average diameter is larger
+       than the distance, a new ball is made, and the algorithm repeats
+      */
+      if(dist(stars[i].x, stars[i].y, stars[j].x, stars[j].y) <= ((stars[i].diameter+stars[j].diameter)*1/2)){
+        float diameterRandom = random ( geometry*1/8, geometry*1/4); //Consider user Input (eye sentitivity)
+        float xRandom = random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 ); //No stars in net
+        float yRandom = random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 ); //Entire displayHeight OK
+        stars[i] = new Ball (xRandom, yRandom, diameterRandom, 0);
+        i = 0;
+        j = stars.length;
+      }
+      }//End nested FOR
+    }
 }
 //End setup()
 //Start draw()
@@ -46,6 +84,13 @@ void draw(){
   //makes sure screen is in landscape
   screencheck.gameRun();
   if (screencheck.check == false) noLoop();
+  else if(Scoreboard.leftScore == 5 || Scoreboard.rightScore == 5) {
+    background(nightmode.Base);
+    for(Ball star : stars){
+      star.draw();
+    }
+    victory.draw();
+  }
   else{
     //draws and updates game visual elements
     background(nightmode.Base);
@@ -54,7 +99,7 @@ void draw(){
     //paddle.drawEasterEgg();
     lines.draw();
     if(ball.numBalls > balls.size()) {
-      balls.add(new Ball(displayWidth, displayHeight-(balls.size()*(displayHeight/(balls.size()+2))), 1));
+      balls.add(new Ball(displayWidth, (ball.y + balls.size()*50)*2, 1));
       if(balls.size() % 2 == 0) balls.get(balls.size()-1).xSpeed *= -1;  
       if(balls.size() % 3 == 1) balls.get(balls.size()-1).ySpeed *= -1;  
   }
