@@ -145,11 +145,21 @@ void draw() {
     base = 0;
     contrast = 255;
   }
-  //If nightmode is true, background is white, and foreground (text and lines) is black
   else {
     base = 255;
     contrast = 0;
   }
+  if (screenCheck == false ) {
+    fill(base);
+    rect(displayWidth*2.5/10, displayHeight*4/10, displayWidth*1/2, displayHeight*2/10);
+    fill(contrast);
+    textAlign(CENTER);
+    textSize(displayHeight*1/30);
+    text("Please Switch your display to landscape mode", displayWidth*3/10+displayWidth*1/5, displayHeight*4/10+displayHeight*1/10);
+    noLoop();
+}
+else {
+  //If nightmode is true, background is white, and foreground (text and lines) is black
   background(base);
   stroke(base);
   //
@@ -165,38 +175,42 @@ void draw() {
   //
   //Arithmetic
   if ( instructionsOn==false ) {
-    shapes.get(paddleLeftElement).objectColour = colourRectLeft;
-    shapes.get(paddleRightElement).objectColour = colourRectRight;
-    shapes.get(lBoardElement).objectColour = base;
-    shapes.get(rBoardElement).objectColour = base;
-    shapes.get(5).objectColour = contrast;
-    shapes.get(6).objectColour = contrast;
-    shapes.get(7).objectColour = contrast;
-    for(int i = 8; i < lenMiddle; i++) shapes.get(i).objectColour = base;
-    shapes.get(ballElement).objectColour = colourBall;
-    shapes.get(ballElement).paddleBounceLeft( shapes.get(paddleLeftElement).x, shapes.get(paddleLeftElement).y, shapes.get(paddleLeftElement).w, shapes.get(paddleLeftElement).h );
-    shapes.get(ballElement).paddleBounceRight( shapes.get(paddleRightElement).x, shapes.get(paddleRightElement).y, shapes.get(paddleRightElement).h );
-    //Drawing where tokens should be
-    //Screensaver functional 
-    if(screensaver == true) {
-      shapes.get(paddleLeftElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;
-      shapes.get(paddleRightElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;    
+    if(lScore == 5 || rScore == 5) {}
+    else{
+      shapes.get(paddleLeftElement).objectColour = colourRectLeft;
+      shapes.get(paddleRightElement).objectColour = colourRectRight;
+      shapes.get(lBoardElement).objectColour = base;
+      shapes.get(rBoardElement).objectColour = base;
+      shapes.get(5).objectColour = contrast;
+      shapes.get(6).objectColour = contrast;
+      shapes.get(7).objectColour = contrast;
+      for(int i = 8; i < lenMiddle; i++) shapes.get(i).objectColour = base;
+      shapes.get(ballElement).objectColour = colourBall;
+      shapes.get(ballElement).paddleBounceLeft( shapes.get(paddleLeftElement).x, shapes.get(paddleLeftElement).y, shapes.get(paddleLeftElement).w, shapes.get(paddleLeftElement).h );
+      shapes.get(ballElement).paddleBounceRight( shapes.get(paddleRightElement).x, shapes.get(paddleRightElement).y, shapes.get(paddleRightElement).h );
+      //Drawing where tokens should be
+      //Screensaver functional 
+      if(screensaver == true) {
+        shapes.get(paddleLeftElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;
+        shapes.get(paddleRightElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;    
+      }
+      if(singleplayer == true) {
+        shapes.get(paddleRightElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;
+      }
+      //Note: repeats basic FOR-Each like belowss
+      for ( int i=1; i<shapes.size(); i++ ) {
+        shapes.get(i).draw();
+        //println("here", i);
+      }
+      fill(contrast);
+      stroke(contrast);
+      textAlign(CENTER);
+      textSize(shapes.get(lBoardElement).h/2);
+      text(lScore, (shapes.get(lBoardElement).x+(shapes.get(lBoardElement).w*1/2)), (shapes.get(lBoardElement).y+(shapes.get(lBoardElement).h*1/2)));
+      text(rScore, (shapes.get(rBoardElement).x+(shapes.get(rBoardElement).w*1/2)), (shapes.get(rBoardElement).y+(shapes.get(rBoardElement).h*1/2)));
     }
-    if(singleplayer == true) {
-      shapes.get(paddleRightElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;
-    }
-    //Note: repeats basic FOR-Each like belowss
-    for ( int i=1; i<shapes.size(); i++ ) {
-      shapes.get(i).draw();
-      //println("here", i);
-    }
-    fill(contrast);
-    stroke(contrast);
-    textAlign(CENTER);
-    textSize(shapes.get(lBoardElement).h/2);
-    text(lScore, (shapes.get(lBoardElement).x+(shapes.get(lBoardElement).w*1/2)), (shapes.get(lBoardElement).y+(shapes.get(lBoardElement).h*1/2)));
-    text(rScore, (shapes.get(rBoardElement).x+(shapes.get(rBoardElement).w*1/2)), (shapes.get(rBoardElement).y+(shapes.get(rBoardElement).h*1/2)));
   }//End instructionsOn==false
+}
   //
 }
 //End draw
