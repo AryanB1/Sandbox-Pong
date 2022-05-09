@@ -26,7 +26,7 @@ class Circle extends Shape {
   }//End draw
   //
   int ballRandomChooser() {
-    return int( random (1, 5) );
+    return int( random (3, 8) );
   }//End ballRandomChooser
   //
   void ballPlay() {

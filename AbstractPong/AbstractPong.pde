@@ -6,8 +6,14 @@
 //Global Variables & Other Items (Classes)
 ArrayList<Shape> shapes = new ArrayList<Shape>();
 Boolean instructionsOn=true, screensaver = false, singleplayer = false, nightmode;
+// Variables for niight mode
 int time, base, contrast;
+// Variables for colour
 int colourBall, colourRectLeft, colourRectRight;
+// Variable for dotted middle line
+int lenMiddle;
+// Variables for left and right score board
+int lScore = 0, rScore = 0;
 //Annonymous Class, one time object
 //These numbers in new shape don't matter since I declare the object again in setup after the displayWidth is set
 Shape instructions = new Shape (0, 100, 200, 300, base) { //These hardcoded variables are minimum display, here
@@ -105,17 +111,30 @@ void setup()
   }
   //Creating circle and rectangle objects 
   Rectangle rHexLeft = new Rectangle(appWidth*1/40, appHeight*1/4, rectWidth, rectHeight, colourRectLeft);
-  Rectangle rHexRight = new Rectangle(appWidth*38/40, appHeight*1/4, rectWidth, rectHeight, colourRectRight);
+  Rectangle rHexRight = new Rectangle(appWidth*39/40-rectWidth, appHeight*1/4, rectWidth, rectHeight, colourRectRight);
   Rectangle lBoard = new Rectangle(appWidth/5, 0, appWidth/10, appHeight/10, base);
   Rectangle rBoard = new Rectangle(appWidth*3/5, 0, appWidth/10, appHeight/10, base);
+  Rectangle leftLine = new Rectangle(appWidth*1/40, 0, 5, appHeight, base);
+  Rectangle rightLine = new Rectangle(appWidth*39/40, 0, 6, appHeight, base);
+  Rectangle middleLine = new Rectangle(appWidth*1/2, 0, 5, appHeight, base);
   Circle cHex = new Circle(appWidth*1/2, appHeight*1/2, xDiameter, yDiameter, colourBall);
   //
-  //Elements 1-5
+  //Elements 1-8
   shapes.add(rHexLeft); 
   shapes.add(rHexRight); 
   shapes.add(lBoard);
   shapes.add(rBoard);
+  shapes.add(leftLine);
+  shapes.add(rightLine);
+  shapes.add(middleLine);
+  for (int i = 15; i < displayHeight; i += 50) {
+    //sets colour, to create dotted effect
+    Rectangle dots = new Rectangle(appWidth*1/2, i, 5, 25, contrast);
+    shapes.add(dots);
+  }
+  lenMiddle = shapes.size();
   shapes.add(cHex);
+  println(lenMiddle);
 }
 //End setup
 //
@@ -135,18 +154,27 @@ void draw() {
   int instructionElement = 0;
   int paddleLeftElement = 1;
   int paddleRightElement = 2;
-  int ballElement = 5;
+  int lBoardElement = 3;
+  int rBoardElement = 4;
+  int ballElement = lenMiddle;
 
   //
   if ( instructionsOn==true ) shapes.get(instructionElement).draw(); //Annonymous Class
   //
   //Arithmetic
   if ( instructionsOn==false ) {
-    shapes.get(1).objectColour = colourRectLeft;
-    shapes.get(2).objectColour = colourRectRight;
-    shapes.get(3).objectColour = base;
-    shapes.get(4).objectColour = base;
-    shapes.get(5).objectColour = colourBall;
+    shapes.get(paddleLeftElement).objectColour = colourRectLeft;
+    shapes.get(paddleRightElement).objectColour = colourRectRight;
+    shapes.get(lBoardElement).objectColour = base;
+    shapes.get(rBoardElement).objectColour = base;
+    shapes.get(5).objectColour = contrast;
+    shapes.get(6).objectColour = contrast;
+    shapes.get(7).objectColour = contrast;
+    textAlign(CENTER);
+    textSize(shapes.get(lBoardElement).h/2);
+    text(lScore, (xLeftScore+(widthScore*1/2)), (yLeftScore+(heightScore*1/2)));
+    for(int i = 8; i < lenMiddle; i++) shapes.get(i).objectColour = base;
+    shapes.get(ballElement).objectColour = colourBall;
     shapes.get(ballElement).paddleBounceLeft( shapes.get(paddleLeftElement).x, shapes.get(paddleLeftElement).y, shapes.get(paddleLeftElement).w, shapes.get(paddleLeftElement).h );
     shapes.get(ballElement).paddleBounceRight( shapes.get(paddleRightElement).x, shapes.get(paddleRightElement).y, shapes.get(paddleRightElement).h );
     //Drawing where tokens should be
