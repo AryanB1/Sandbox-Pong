@@ -246,7 +246,7 @@ void keyPressed() {
   if(key == 't' || key == 'T') rPaddleSpeed = 20;
   if(key == 'h' || key == 'H') rPaddleSpeed = 30;
   // Reset Game
-  if(key == 'z') {
+  if(key == 'z' || key == 'Z') {
     //Scoreboards to original
     lScore = 0;
     rScore = 0;
