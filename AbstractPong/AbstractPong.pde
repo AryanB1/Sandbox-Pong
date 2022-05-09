@@ -14,6 +14,8 @@ int colourBall, colourRectLeft, colourRectRight;
 int lenMiddle;
 // Variables for left and right score board
 int lScore = 0, rScore = 0;
+//Variables for ball speed;
+int lPaddleSpeed = 0, rPaddleSpeed = 0;
 //Annonymous Class, one time object
 //These numbers in new shape don't matter since I declare the object again in setup after the displayWidth is set
 Shape instructions = new Shape (0, 100, 200, 300, base) { //These hardcoded variables are minimum display, here
@@ -24,6 +26,7 @@ Shape instructions = new Shape (0, 100, 200, 300, base) { //These hardcoded vari
     rect(x, y, w, h); //background for instructions menu
     fill(contrast);
     String instructions[] = {
+  "Please set your screen in landscape mode",
   "For single player: press j (You control the left paddle)",
   "To turn off single player: press z",
   "For screen saver: press f",
@@ -134,7 +137,6 @@ void setup()
   }
   lenMiddle = shapes.size();
   shapes.add(cHex);
-  println(lenMiddle);
 }
 //End setup
 //
@@ -170,10 +172,6 @@ void draw() {
     shapes.get(5).objectColour = contrast;
     shapes.get(6).objectColour = contrast;
     shapes.get(7).objectColour = contrast;
-    textAlign(CENTER);
-    textSize(shapes.get(lBoardElement).h/2);
-    text(lScore, (shapes.get(lBoardElement).x+(shapes.get(lBoardElement).w*1/2)), (shapes.get(lBoardElement).y+(shapes.get(lBoardElement).h*1/2)));
-    text(lScore, (shapes.get(rBoardElement).x+(shapes.get(rBoardElement).w*1/2)), (shapes.get(rBoardElement).y+(shapes.get(rBoardElement).h*1/2)));
     for(int i = 8; i < lenMiddle; i++) shapes.get(i).objectColour = base;
     shapes.get(ballElement).objectColour = colourBall;
     shapes.get(ballElement).paddleBounceLeft( shapes.get(paddleLeftElement).x, shapes.get(paddleLeftElement).y, shapes.get(paddleLeftElement).w, shapes.get(paddleLeftElement).h );
@@ -192,7 +190,12 @@ void draw() {
       shapes.get(i).draw();
       //println("here", i);
     }
-
+    fill(contrast);
+    stroke(contrast);
+    textAlign(CENTER);
+    textSize(shapes.get(lBoardElement).h/2);
+    text(lScore, (shapes.get(lBoardElement).x+(shapes.get(lBoardElement).w*1/2)), (shapes.get(lBoardElement).y+(shapes.get(lBoardElement).h*1/2)));
+    text(rScore, (shapes.get(rBoardElement).x+(shapes.get(rBoardElement).w*1/2)), (shapes.get(rBoardElement).y+(shapes.get(rBoardElement).h*1/2)));
   }//End instructionsOn==false
   //
 }
@@ -210,13 +213,13 @@ void keyPressed() {
     }
   }
   // Left Paddle Up
-  if ( key == 'W' || key == 'w' ) shapes.get(paddleLeftElement).y -= 15;
+  if ( key == 'W' || key == 'w' ) shapes.get(paddleLeftElement).y -= lPaddleSpeed;
   // Left Paddle Down
-  if ( key == 'S' || key == 's' ) shapes.get(paddleLeftElement).y += 15;
+  if ( key == 'S' || key == 's' ) shapes.get(paddleLeftElement).y += lPaddleSpeed;
   // Right Paddle Up
-  if ( key == CODED && keyCode == UP ) shapes.get(paddleRightElement).y -= 15;
+  if ( key == CODED && keyCode == UP ) shapes.get(paddleRightElement).y -= rPaddleSpeed;
   // Right Paddle Down
-  if ( key == CODED && keyCode == DOWN )shapes.get(paddleRightElement).y += 15;
+  if ( key == CODED && keyCode == DOWN )shapes.get(paddleRightElement).y += rPaddleSpeed;
   // Turn On Screen Saver
   if(key == 'f' || key == 'F') screensaver = true;
   // Turn On Single Player
@@ -234,6 +237,33 @@ void keyPressed() {
     colourRectLeft = color(int( random(50, 200) ), int( random(50, 200) ), int( random(50, 200) ));
     colourRectRight = color(int( random(50, 200) ), int( random(50, 200) ), int( random(50, 200) ));
     colourBall = color(int( random(50, 200) ), int( random(50, 200) ), int( random(50, 200) ));
+  }
+  //Setting Paddle Speeds 
+  if(key == 'n' || key == 'N') lPaddleSpeed = 10;
+  if(key == 'r' || key == 'R') lPaddleSpeed = 20;
+  if(key == 'g' || key == 'G') lPaddleSpeed = 30;
+  if(key == 'm' || key == 'M') rPaddleSpeed = 10;
+  if(key == 't' || key == 'T') rPaddleSpeed = 20;
+  if(key == 'h' || key == 'H') rPaddleSpeed = 30;
+  // Reset Game
+  if(key == 'z') {
+    //Scoreboards to original
+    lScore = 0;
+    rScore = 0;
+    // Paddle Speed to original
+    lPaddleSpeed = 0;
+    rPaddleSpeed = 0;
+    //Paddle height to original
+    shapes.get(1).y = appHeight*1/4;
+    shapes.get(2).y = appHeight*1/4;
+    // Ball to original
+    shapes.get(lenMiddle).x = displayWidth*1/2;
+    shapes.get(lenMiddle).y = displayHeight*1/2;
+    // Single player and screen saver turned off
+    singleplayer = false;
+    screensaver = false;
+    // Turn on instructions
+    instructionsOn = true;
   }
 }
 //End keyPressed

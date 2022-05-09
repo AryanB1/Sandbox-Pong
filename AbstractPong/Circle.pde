@@ -26,20 +26,21 @@ class Circle extends Shape {
   }//End draw
   //
   int ballRandomChooser() {
-    return int( random (3, 8) );
+    return int( random (3, 6) );
   }//End ballRandomChooser
   //
   void ballPlay() {
     //Scoring on Left and Right Goals, resetting variables to decrease system resourses
     if ( x < (width*0)+w || x > width - w) { //Net Detection
-      ballXGoal = true;
       if (x < (width*0)+w ) { //Goal for left player
-        x = (width*0)+(w/4);
-        y = y; //Variable becomes "final" here
+        this.x = displayWidth*1/2;
+        this.y = displayHeight*1/2; //Variable becomes "final" here
+        rScore += 1;
       }
       if ( x > width - w ) { //Goal for right player
-        x = (width)-(w/4);
-        y = y; //Variable becomes "final" here
+        this.x = displayWidth*1/2;
+        this.y = displayWidth*1/2; //Variable becomes "final" here
+        lScore += 1;
       }
     } //End Net Detection
     //
@@ -48,8 +49,7 @@ class Circle extends Shape {
     if ( y-w*1/2 < displayHeight*0 || y+w*1/2 > displayHeight ) directionY *= -1;
     //
     //Ball "Step"
-    if (ballXGoal == true) { //EMPTY IF to skip ball arithmetic, when score happens
-    } else {
+    if (lPaddleSpeed > 0 && rPaddleSpeed > 0) { //EMPTY IF to skip ball arithmetic, when score happens
       ballMoveX = ballSpeedX*directionX;
       ballMoveY = ballSpeedY*directionY;
       x += ballMoveX;
