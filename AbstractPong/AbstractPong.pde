@@ -172,7 +172,8 @@ void draw() {
     shapes.get(7).objectColour = contrast;
     textAlign(CENTER);
     textSize(shapes.get(lBoardElement).h/2);
-    text(lScore, (xLeftScore+(widthScore*1/2)), (yLeftScore+(heightScore*1/2)));
+    text(lScore, (shapes.get(lBoardElement).x+(shapes.get(lBoardElement).w*1/2)), (shapes.get(lBoardElement).y+(shapes.get(lBoardElement).h*1/2)));
+    text(lScore, (shapes.get(rBoardElement).x+(shapes.get(rBoardElement).w*1/2)), (shapes.get(rBoardElement).y+(shapes.get(rBoardElement).h*1/2)));
     for(int i = 8; i < lenMiddle; i++) shapes.get(i).objectColour = base;
     shapes.get(ballElement).objectColour = colourBall;
     shapes.get(ballElement).paddleBounceLeft( shapes.get(paddleLeftElement).x, shapes.get(paddleLeftElement).y, shapes.get(paddleLeftElement).w, shapes.get(paddleLeftElement).h );
