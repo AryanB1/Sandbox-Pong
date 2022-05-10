@@ -4,6 +4,7 @@ class Paddle {
   private color colour, colourResetWhite=#000000;
   private int paddleXLeft, paddleXRight, paddleYLeft, paddleYRight, paddleWidth, paddleHeight, leftPaddleSpeed, rightPaddleSpeed, paddleOrigin, yMove;
   private Boolean upLeft, downLeft, upRight, downRight, paddleLeftSpeed, paddleRightSpeed;
+  public Boolean leftDrop = false, rightDrop = false;
   //Start Constructor
   Paddle (float widthParameter, float heightParameter) {
     //For the colours, everything is randomized between 80 and 220
@@ -32,7 +33,7 @@ class Paddle {
   }
   //This paddle constructor is an easter egg when the score is one for either the left or right player
   //After a closer look, implementing my planned easter egg would just make my game look buggy rather than cool
-  Paddle (float widthParameter, float heightParameter, int leftOrRight) {
+  Paddle (float widthParameter, float heightParameter, String leftOrRight) {
     //For the colours, everything is randomized between 80 and 220
     //This is because through testing, I found that the 0-80, 220-255 range was a bit too solid
     //In comparison, since the 80-220 range is smaller, all the colours have a relatively similar level of colour solidness
@@ -153,6 +154,8 @@ class Paddle {
   void draw() {
     leftPaddle();
     rightPaddle();
+    easterEgg();
+    
   }//End draw
   // Start leftpaddle()
   void leftPaddle() {
@@ -173,10 +176,36 @@ class Paddle {
     rect(paddleXRight, paddleYRight, paddleWidth, paddleHeight-(Scoreboard.rightScore*10));
     fill(colourResetWhite);
   }
-  //End rightPaddle
-  void drawEasterEgg() {
-    if(Scoreboard.leftScore == 1 && downLeft == false || Scoreboard.rightScore == 1 && downLeft == false) paddles.add(new Paddle(displayWidth, displayHeight, 1));
-    if(Scoreboard.leftScore == 1 && downRight == false || Scoreboard.rightScore == 1 && downRight == false) paddles.add(new Paddle(displayWidth, displayHeight, 2));
+  void easterEgg() {
+    colourChange();
+    fill(colour);
+    //Draws paddle
+    rect(paddleXRight, paddleYRight, paddleWidth, paddleHeight-(Scoreboard.rightScore*10));
+    fill(colourResetWhite);
   }
+  //End rightPaddle
+  //Start Paddle Reduction
+  /*
+  void paddleReduction() {
+    if(leftDrop == true) {
+      paddles.add(new Paddle(displayWidth*1/40, (paddle.paddleYLeft+paddle.paddleHeight-10), "Left"));
+      leftDrop = false;
+    }
+    if(rightDrop == true){
+      paddles.add(new Paddle(displayWidth*39/40-paddle.paddleWidth, (paddle.paddleYLeft+paddle.paddleHeight-10), "Right"));
+      rightDrop = false;
+    }
+}
+  void drawPaddles() {
+    if(paddles.size() == 2) {
+      paddles.get(1).paddleYLeft += 15;
+      if (paddles.get(1).paddleYLeft > displayHeight) {
+        paddles.remove(1);
+      }
+    }
+  
+  }
+  
+  */
 }
 //End Paddle class

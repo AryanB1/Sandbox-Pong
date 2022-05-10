@@ -10,7 +10,7 @@ Lines lines;
 screenCheck screencheck;
 Victory victory;
 ArrayList<Ball> balls;
-ArrayList<Paddle> paddles;
+ArrayList<Paddle> paddles = new ArrayList<Paddle>();
 Ball[] stars= new Ball[25];
 Ball[] fireworks = new Ball[25];
 reset reset;
@@ -31,15 +31,12 @@ void setup(){
   balls = new ArrayList<Ball>();
   //for(int i = 0; i < balls.length; i++) {
   balls.add(new Ball(displayWidth, displayHeight, 1));//balls[i] = new Ball(displayWidth, displayHeight-(i*(displayHeight/(balls.length+2))), 1);
- // paddles.add(new Paddle(displayWidth, displayHeight, 3));
-   // if(i % 2 == 1) balls[i].ySpeed *= -1;  
-    //if(i % 2 == 0) balls[i].xSpeed *= -1;
-//}
   paddle = new Paddle( displayWidth, displayHeight);
   screencheck = new screenCheck( displayWidth, displayHeight);
   screensaver = new screenSaver();
   singleplayer = new singlePlayer();
   victory = new Victory();
+  paddles.add(new Paddle(displayWidth, displayHeight, "Neither, this is here so that I have an object"));
   reset = new reset();
   for (int i=0; i<fireworks.length; i++) {
     fireworks[i] = new Ball(width, height, 0, 0, 0);
@@ -102,6 +99,7 @@ void draw(){
     Scoreboard.draw();
     //paddle.drawEasterEgg();
     lines.draw();
+    if(paddles.size() == 2) paddles.get(1).draw();
     if(ball.start == true) startFireworks = true;
     //if(startFireworks == true){
      // print(2);
