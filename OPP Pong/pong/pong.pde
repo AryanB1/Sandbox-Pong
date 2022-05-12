@@ -97,9 +97,12 @@ void draw(){
     background(nightmode.Base);
     paddle.draw();
     Scoreboard.draw();
-    //paddle.drawEasterEgg();
     lines.draw();
-    if(paddles.size() == 2) paddles.get(1).draw();
+    //Automatically checks for when a new paddle drop needs to happen rather than me manually checking
+    // Through boolean statements 
+    for(int i = 0; i < paddles.size(); i++) {
+      paddles.get(i).drawPaddles();
+    }
     if(ball.start == true) startFireworks = true;
     //if(startFireworks == true){
      // print(2);

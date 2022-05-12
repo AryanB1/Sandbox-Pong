@@ -29,9 +29,9 @@ class singlePlayer {
       singleplayer.singleUse = false;
     }
     //makes sure right paddle always hits ball and never goes off screen
-    paddle.paddleYRight = int(ball.y)-paddle.paddleHeight*1/2;
+    paddle.paddleYRight = int(ball.y)-paddle.paddleRightHeight*1/2;
     if(paddle.paddleYRight <= 0) paddle.paddleYRight = 0;
-    if(paddle.paddleYRight >= displayHeight-paddle.paddleHeight) paddle.paddleYRight = displayHeight-paddle.paddleHeight;  
+    if(paddle.paddleYRight >= displayHeight-paddle.paddleRightHeight) paddle.paddleYRight = displayHeight-paddle.paddleRightHeight;  
   }
   //End activateSinglePlayer()
 }

@@ -15,8 +15,8 @@ class screenSaver {
   //starts activateSaver()
   void activateSaver() {
     //Makes sure paddles always hit ball
-    paddle.paddleYLeft = int(ball.y)-paddle.paddleHeight*1/2;
-    paddle.paddleYRight = int(ball.y)-paddle.paddleHeight*1/2;
+    paddle.paddleYLeft = int(ball.y)-paddle.paddleLeftHeight*1/2;
+    paddle.paddleYRight = int(ball.y)-paddle.paddleRightHeight*1/2;
     //Makes sure user cannot move paddles
     paddle.upLeft = false;
     paddle.downLeft = false;
@@ -32,9 +32,9 @@ class screenSaver {
       paddle.paddleYLeft = 0;
       paddle.paddleYRight = 0;
     }
-    if(paddle.paddleYLeft >= displayHeight-paddle.paddleHeight || paddle.paddleYRight >= displayHeight-paddle.paddleHeight){
-      paddle.paddleYLeft = displayHeight-paddle.paddleHeight;
-      paddle.paddleYRight = displayHeight-paddle.paddleHeight;  
+    if(paddle.paddleYLeft >= displayHeight-paddle.paddleLeftHeight || paddle.paddleYRight >= displayHeight-paddle.paddleRightHeight){
+      paddle.paddleYLeft = displayHeight-paddle.paddleLeftHeight;
+      paddle.paddleYRight = displayHeight-paddle.paddleRightHeight;  
   }
   }
   //End activateSaver()

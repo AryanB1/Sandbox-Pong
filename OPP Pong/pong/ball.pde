@@ -126,7 +126,7 @@ private class Ball
     //Checks for top and bottom bounces
     if ( y-diameter*1/2 < displayHeight*0 || y+diameter*1/2 > displayHeight ) ySpeed *= -1;
     //Checks for left paddle bounces
-    if (x >= paddle.paddleXLeft+paddle.paddleWidth && x <= paddle.paddleXLeft+paddle.paddleWidth+(diameter*1/2) && y >= paddle.paddleYLeft && y <= paddle.paddleYLeft+(paddle.paddleHeight)){  
+    if (x >= paddle.paddleXLeft+paddle.paddleWidth && x <= paddle.paddleXLeft+paddle.paddleWidth+(diameter*1/2) && y >= paddle.paddleYLeft && y <= paddle.paddleYLeft+(paddle.paddleLeftHeight)){  
       xSpeed *= -1;
       //Changes up paddle colours, cuz one colour would just be boring
       if ( nightmode.nightMode == false ) this.colour = color( random( 0, 255), random(255), random(255) );
@@ -135,7 +135,7 @@ private class Ball
       if(singleplayer.singlePlayer == true) Scoreboard.leftScore += 1;
     }
     //Checks for right paddle bounces
-    if (x <= paddle.paddleXRight && x >= paddle.paddleXRight-(diameter*1/2) && y >= paddle.paddleYRight && y <= paddle.paddleYRight+(paddle.paddleHeight)){
+    if (x <= paddle.paddleXRight && x >= paddle.paddleXRight-(diameter*1/2) && y >= paddle.paddleYRight && y <= paddle.paddleYRight+(paddle.paddleRightHeight)){
       xSpeed *= -1;
       //Changes up paddle colours, cuz one colour would just be boring
       if ( nightmode.nightMode == false ) this.colour = color( random( 0, 255), random(255), random(255) );
@@ -155,6 +155,7 @@ private class Ball
           start = true;
           println("Left player Scored!!!");
           Scoreboard.rightGoalScore = true;
+          paddles.add(new Paddle(paddle.paddleXLeft, paddle.paddleYLeft+paddle.paddleLeftHeight, "new left paddle"));
         }
         }
     } 
@@ -172,6 +173,8 @@ private class Ball
         start = true;
         println("Right player Scored!!!");
         Scoreboard.leftGoalScore = true;
+        paddles.add(new Paddle(paddle.paddleXRight, paddle.paddleYRight+paddle.paddleRightHeight, "new right paddle"));
+        
       }
   }
   }

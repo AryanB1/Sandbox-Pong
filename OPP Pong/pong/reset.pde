@@ -24,8 +24,8 @@ class reset {
     paddle.downRight = false;
     paddle.paddleLeftSpeed = false;
     paddle.paddleRightSpeed = false;
-    paddle.paddleYLeft = paddle.paddleOrigin;
-    paddle.paddleYRight = paddle.paddleOrigin;
+    paddle.paddleYLeft = paddle.paddleLeftOrigin;
+    paddle.paddleYRight = paddle.paddleRightOrigin;
     Scoreboard.leftScore = 0;
     Scoreboard.rightScore = 0;
     if(singleplayer.singlePlayer == true || screensaver.screenSaver == true){

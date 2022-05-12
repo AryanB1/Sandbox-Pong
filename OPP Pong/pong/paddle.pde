@@ -2,7 +2,7 @@
 class Paddle {
   //Global Variables
   private color colour, colourResetWhite=#000000;
-  private int paddleXLeft, paddleXRight, paddleYLeft, paddleYRight, paddleWidth, paddleHeight, leftPaddleSpeed, rightPaddleSpeed, paddleOrigin, yMove;
+  private int paddleXLeft, paddleXRight, paddleYLeft, paddleYRight, paddleWidth, paddleLeftHeight, paddleRightHeight, paddleHeight, leftPaddleSpeed, rightPaddleSpeed, paddleLeftOrigin, paddleRightOrigin, yMove, paddleX, paddleY, reduction;
   private Boolean upLeft, downLeft, upRight, downRight, paddleLeftSpeed, paddleRightSpeed;
   public Boolean leftDrop = false, rightDrop = false;
   //Start Constructor
@@ -18,11 +18,14 @@ class Paddle {
     paddleWidth = int(widthParameter*1/80); 
     paddleXLeft = int(widthParameter*1/40);
     paddleXRight = int(widthParameter*39/40) - paddleWidth;
-    paddleHeight = int(heightParameter*1/4);
-    paddleOrigin = int(heightParameter*1/2) - paddleHeight*1/2;
+    this.paddleLeftHeight = int(heightParameter*1/4);
+    this.paddleRightHeight = int(heightParameter*1/4);
+    reduction = int(heightParameter)*1/20;
+    paddleLeftOrigin = int(heightParameter*1/2) - paddleLeftHeight*1/2;
+    paddleRightOrigin = int(heightParameter*1/2) - paddleRightHeight*1/2;
     //Paddles Start middle
-    this.paddleYLeft = paddleOrigin;
-    this.paddleYRight = paddleOrigin;
+    this.paddleYLeft = paddleLeftOrigin;
+    this.paddleYRight = paddleRightOrigin;
     //Variables to move the paddle and select speed
     this.upLeft = false;
     this.downLeft = false;
@@ -42,21 +45,11 @@ class Paddle {
     if ( nightmode.nightMode == false ) this.colour = color ( int(random(80, 220)), int(random(80, 220)), int(random(80, 220)) ) ; 
     if ( nightmode.nightMode == true ) this.colour = color ( int(random(80, 220)), int(random(80, 220)), 0 ) ; 
     //Assigning Values
-    paddleWidth = int(widthParameter*1/80); 
-    paddleXLeft = int(widthParameter*1/40);
-    paddleXRight = int(widthParameter*39/40) - paddleWidth;
-    paddleHeight = int(heightParameter*1/4);
-    paddleOrigin = int(heightParameter*1/2) - paddleHeight*1/2;
+    paddleWidth = int(displayWidth*1/80); 
+    paddleX = int(widthParameter); // displayWidth*1/40 or widthParameter*39/40 - paddleWidth;
+    paddleHeight = paddle.reduction;
     //Paddles Start middle
-    this.paddleYLeft = paddleOrigin;
-    this.paddleYRight = paddleOrigin;
-    //Variables to move the paddle and select speed
-    this.upLeft = false;
-    this.downLeft = false;
-    this.upRight = false;
-    this.downRight = false;
-    this.paddleLeftSpeed = false;
-    this.paddleRightSpeed = false;
+    this.paddleY = int(heightParameter);
   }
   //End Constructor
   //Start paddleMoveLeft() -- as title suggests, handles left paddle movement. 
@@ -84,7 +77,7 @@ class Paddle {
     if(Instruction.openInstructions == false){
       if ( paddleYLeft < displayHeight*0)this.upLeft = false;
       else this.upLeft = true;
-      if ( paddleYLeft+paddleHeight > displayHeight) this.downLeft = false;
+      if ( paddleYLeft+paddleLeftHeight > displayHeight) this.downLeft = false;
       else this.downLeft = true;
       //Moves Paddle Up
       if ( key=='W' && this.upLeft == true|| key=='w' && this.upLeft == true){ 
@@ -122,7 +115,7 @@ class Paddle {
     }
     //Paddle won't go off screen
     if ( paddleYRight < (displayHeight*0)) this.upRight = false;
-    if ( paddleYRight+paddleHeight > displayHeight) this.downRight = false;
+    if ( paddleYRight+paddleRightHeight > displayHeight) this.downRight = false;
     //Moves Paddle Up
     if ( key==CODED && keyCode==UP && this.upRight == true ){
       paddleYRight -= rightPaddleSpeed;
@@ -154,8 +147,6 @@ class Paddle {
   void draw() {
     leftPaddle();
     rightPaddle();
-    easterEgg();
-    
   }//End draw
   // Start leftpaddle()
   void leftPaddle() {
@@ -163,7 +154,7 @@ class Paddle {
     colourChange();
     fill(colour);
     //Draws paddle and reduces paddle size based on the players score
-    rect(paddleXLeft, paddleYLeft, paddleWidth, paddleHeight-(Scoreboard.leftScore*10));
+    rect(paddleXLeft, paddleYLeft, paddleWidth, paddleLeftHeight-(Scoreboard.leftScore*reduction));
     fill(colourResetWhite);
   }
   //End leftPaddle
@@ -173,39 +164,18 @@ class Paddle {
     colourChange();
     fill(colour);
     //Draws paddle
-    rect(paddleXRight, paddleYRight, paddleWidth, paddleHeight-(Scoreboard.rightScore*10));
-    fill(colourResetWhite);
-  }
-  void easterEgg() {
-    colourChange();
-    fill(colour);
-    //Draws paddle
-    rect(paddleXRight, paddleYRight, paddleWidth, paddleHeight-(Scoreboard.rightScore*10));
+    rect(paddleXRight, paddleYRight, paddleWidth, paddleRightHeight-(Scoreboard.rightScore*reduction));
     fill(colourResetWhite);
   }
   //End rightPaddle
   //Start Paddle Reduction
-  /*
-  void paddleReduction() {
-    if(leftDrop == true) {
-      paddles.add(new Paddle(displayWidth*1/40, (paddle.paddleYLeft+paddle.paddleHeight-10), "Left"));
-      leftDrop = false;
-    }
-    if(rightDrop == true){
-      paddles.add(new Paddle(displayWidth*39/40-paddle.paddleWidth, (paddle.paddleYLeft+paddle.paddleHeight-10), "Right"));
-      rightDrop = false;
-    }
-}
-  void drawPaddles() {
-    if(paddles.size() == 2) {
-      paddles.get(1).paddleYLeft += 15;
-      if (paddles.get(1).paddleYLeft > displayHeight) {
-        paddles.remove(1);
-      }
+  void drawPaddles() {                   
+    fill(paddle.colour);
+    //Draws paddle and reduces paddle size based on the players score
+    rect(paddleX, paddleY, paddleWidth, paddleHeight);
+    if (paddleY < displayHeight+25) this.paddleY += 3;
+    fill(colourResetWhite);
     }
   
-  }
-  
-  */
 }
 //End Paddle class
