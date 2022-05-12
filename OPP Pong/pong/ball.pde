@@ -147,14 +147,18 @@ private class Ball
         this.x = xStart;
         this.y = yStart;
         Scoreboard.rightGoalScore = true;
+        paddle.paddleLeftHeight -= paddle.reduction;
+        score.lDraw = true;
+        paddles.add(new Paddle(paddle.paddleXLeft, paddle.paddleYLeft+paddle.paddleLeftHeight, "new left paddle"));
       }
       else{
         for(int i = 0; i < balls.size(); i ++) {
           balls.get(i).x = xStart; 
           balls.get(i).y = (ball.y + i*50);
           start = true;
-          println("Left player Scored!!!");
           Scoreboard.rightGoalScore = true;
+          paddle.paddleLeftHeight -= paddle.reduction;
+          score.lDraw = true;
           paddles.add(new Paddle(paddle.paddleXLeft, paddle.paddleYLeft+paddle.paddleLeftHeight, "new left paddle"));
         }
         }
@@ -165,14 +169,18 @@ private class Ball
         this.x = xStart;
         this.y = yStart;
         Scoreboard.leftGoalScore = true;
+        paddle.paddleRightHeight -=Scoreboard.rightScore*paddle.reduction;
+        score.rDraw = true;
+        paddles.add(new Paddle(paddle.paddleXRight, paddle.paddleYRight+paddle.paddleRightHeight, "new right paddle"));
       }
     else{
       for(int i = 0; i < balls.size(); i ++) {
         balls.get(i).x = xStart; 
         balls.get(i).y = (ball.y + i*50);
         start = true;
-        println("Right player Scored!!!");
         Scoreboard.leftGoalScore = true;
+        paddle.paddleRightHeight -=Scoreboard.rightScore*paddle.reduction;
+        score.rDraw = true;
         paddles.add(new Paddle(paddle.paddleXRight, paddle.paddleYRight+paddle.paddleRightHeight, "new right paddle"));
         
       }

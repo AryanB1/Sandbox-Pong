@@ -5,6 +5,7 @@ nightMode nightmode;
 ScoreBoard Scoreboard;
 Ball ball;
 Paddle paddle;
+Score score;
 Instructions Instruction;
 Lines lines;
 screenCheck screencheck;
@@ -34,6 +35,7 @@ void setup(){
   paddle = new Paddle( displayWidth, displayHeight);
   screencheck = new screenCheck( displayWidth, displayHeight);
   screensaver = new screenSaver();
+  score = new Score();
   singleplayer = new singlePlayer();
   victory = new Victory();
   paddles.add(new Paddle(displayWidth, displayHeight, "Neither, this is here so that I have an object"));
@@ -100,6 +102,8 @@ void draw(){
     background(nightmode.Base);
     paddle.draw();
     Scoreboard.draw();
+    score.drawLeft();
+    score.drawRight();
     lines.draw();
     //Automatically checks for when a new paddle drop needs to happen rather than me manually checking
     // Through boolean statements 

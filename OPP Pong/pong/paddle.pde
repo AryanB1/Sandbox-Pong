@@ -15,12 +15,12 @@ class Paddle {
     if ( nightmode.nightMode == false ) this.colour = color ( int(random(80, 220)), int(random(80, 220)), int(random(80, 220)) ) ; 
     if ( nightmode.nightMode == true ) this.colour = color ( int(random(80, 220)), int(random(80, 220)), 0 ) ; 
     //Assigning Values
+    reduction = int(heightParameter)*1/25;
     paddleWidth = int(widthParameter*1/80); 
     paddleXLeft = int(widthParameter*1/40);
     paddleXRight = int(widthParameter*39/40) - paddleWidth;
-    this.paddleLeftHeight = int(heightParameter*1/4);
-    this.paddleRightHeight = int(heightParameter*1/4);
-    reduction = int(heightParameter)*1/20;
+    this.paddleLeftHeight = int(heightParameter*1/4) - (Scoreboard.leftScore*reduction);
+    this.paddleRightHeight = int(heightParameter*1/4) - (Scoreboard.rightScore*reduction);
     paddleLeftOrigin = int(heightParameter*1/2) - paddleLeftHeight*1/2;
     paddleRightOrigin = int(heightParameter*1/2) - paddleRightHeight*1/2;
     //Paddles Start middle
@@ -154,7 +154,7 @@ class Paddle {
     colourChange();
     fill(colour);
     //Draws paddle and reduces paddle size based on the players score
-    rect(paddleXLeft, paddleYLeft, paddleWidth, paddleLeftHeight-(Scoreboard.leftScore*reduction));
+    rect(paddleXLeft, paddleYLeft, paddleWidth, paddleLeftHeight);
     fill(colourResetWhite);
   }
   //End leftPaddle
@@ -164,7 +164,7 @@ class Paddle {
     colourChange();
     fill(colour);
     //Draws paddle
-    rect(paddleXRight, paddleYRight, paddleWidth, paddleRightHeight-(Scoreboard.rightScore*reduction));
+    rect(paddleXRight, paddleYRight, paddleWidth, paddleRightHeight);
     fill(colourResetWhite);
   }
   //End rightPaddle
