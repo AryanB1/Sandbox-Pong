@@ -26,7 +26,7 @@ class Score {
       textSize(hei*1/6);
       text(messageL, xL+(wid*1/2),yL+(hei*1/2));
       // Once the paddle drop is off the screen, make message disappear.
-      if(paddles.get(paddles.size()-1).paddleY > displayHeight) lDraw = false;
+      if(paddles.get(paddles.size()-1).paddleY > displayHeight+600) lDraw = false;
     }
   }
   // End drawLeft
@@ -38,7 +38,7 @@ class Score {
       textSize(hei*1/6);
       text(messageR, xR+(wid*1/2),yR+(hei*1/2));
       // Once the paddle drop is off the screen, make message disappear.
-      if(paddles.get(paddles.size()-1).paddleY > displayHeight) rDraw = false;
+      if(paddles.get(paddles.size()-1).paddleY > displayHeight+600) rDraw = false;
     }
   }
   // End drawRight

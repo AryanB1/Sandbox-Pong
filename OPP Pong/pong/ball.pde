@@ -150,7 +150,8 @@ private class Ball
         paddle.paddleLeftHeight -= paddle.reduction;
         score.lDraw = true;
         paddles.add(new Paddle(paddle.paddleXLeft, paddle.paddleYLeft+paddle.paddleLeftHeight, "new left paddle"));
-      }
+        paddles.get(paddles.size()-1).Ldrop = true;  
+    }
       else{
         for(int i = 0; i < balls.size(); i ++) {
           balls.get(i).x = xStart; 
@@ -160,6 +161,7 @@ private class Ball
           paddle.paddleLeftHeight -= paddle.reduction;
           score.lDraw = true;
           paddles.add(new Paddle(paddle.paddleXLeft, paddle.paddleYLeft+paddle.paddleLeftHeight, "new left paddle"));
+          paddles.get(paddles.size()-1).Ldrop = true; 
         }
         }
     } 
@@ -172,6 +174,7 @@ private class Ball
         paddle.paddleRightHeight -=Scoreboard.rightScore*paddle.reduction;
         score.rDraw = true;
         paddles.add(new Paddle(paddle.paddleXRight, paddle.paddleYRight+paddle.paddleRightHeight, "new right paddle"));
+        paddles.get(paddles.size()-1).Rdrop = true; 
       }
     else{
       for(int i = 0; i < balls.size(); i ++) {
@@ -182,7 +185,7 @@ private class Ball
         paddle.paddleRightHeight -=Scoreboard.rightScore*paddle.reduction;
         score.rDraw = true;
         paddles.add(new Paddle(paddle.paddleXRight, paddle.paddleYRight+paddle.paddleRightHeight, "new right paddle"));
-        
+        paddles.get(paddles.size()-1).Rdrop = true; 
       }
   }
   }

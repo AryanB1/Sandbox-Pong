@@ -2,9 +2,9 @@
 class Paddle {
   //Global Variables
   private color colour, colourResetWhite=#000000;
-  private int paddleXLeft, paddleXRight, paddleYLeft, paddleYRight, paddleWidth, paddleLeftHeight, paddleRightHeight, paddleHeight, leftPaddleSpeed, rightPaddleSpeed, paddleLeftOrigin, paddleRightOrigin, yMove, paddleX, paddleY, reduction;
+  private int paddleXLeft, paddleXRight, paddleYLeft, paddleYRight, paddleWidth, paddleLeftHeight, paddleRightHeight, paddleHeight, leftPaddleSpeed, rightPaddleSpeed, paddleLeftOrigin, paddleRightOrigin, yMove, paddleX, paddleY, reduction, paddleDist;
   private Boolean upLeft, downLeft, upRight, downRight, paddleLeftSpeed, paddleRightSpeed;
-  public Boolean leftDrop = false, rightDrop = false;
+  public Boolean Ldrop, Rdrop;
   //Start Constructor
   Paddle (float widthParameter, float heightParameter) {
     //For the colours, everything is randomized between 80 and 220
@@ -49,6 +49,9 @@ class Paddle {
     paddleX = int(widthParameter); // displayWidth*1/40 or widthParameter*39/40 - paddleWidth;
     paddleHeight = paddle.reduction;
     //Paddles Start middle
+    this.Ldrop = false;
+    this.Rdrop = false;
+    this.paddleDist = 3;
     this.paddleY = int(heightParameter);
   }
   //End Constructor
@@ -169,12 +172,22 @@ class Paddle {
   }
   //End rightPaddle
   //Start Paddle Reduction
-  void drawPaddles() {                   
+  void drawPaddles() {     
+    /*
+    if(Ldrop = true) {
+      paddleDist = displayHeight - paddleYLeft;
+      this.Ldrop = false;
+    }
+    if(Rdrop = false) {
+      paddleDist = displayHeight - paddleYRight;
+      this.Rdrop = false;
+    }
+    */
     fill(paddle.colour);
     stroke(nightmode.Contrast);
     //Draws paddle and reduces paddle size based on the players score
     rect(paddleX, paddleY, paddleWidth, paddleHeight);
-    if (paddleY < displayHeight+25) this.paddleY += 3;
+    if (paddleY < displayHeight+900) this.paddleY += paddleDist;
     fill(colourResetWhite);
     stroke(nightmode.Base);
     }

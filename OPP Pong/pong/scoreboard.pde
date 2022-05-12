@@ -35,12 +35,10 @@ class ScoreBoard {
     //Adds point when goal is scored
     if(leftGoalScore == true) {
       rightScore += 1;
-      paddle.rightDrop = true;
       leftGoalScore = false;
     }
     if(rightGoalScore == true){
       leftScore += 1;
-      paddle.leftDrop = true;
       rightGoalScore = false;
     }
   }
