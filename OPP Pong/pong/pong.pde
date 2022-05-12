@@ -84,7 +84,10 @@ void setup(){
 void draw(){
   //makes sure screen is in landscape
   screencheck.gameRun();
-  if (screencheck.check == false) noLoop();
+  if (screencheck.check == false){
+    screencheck.draw();
+    noLoop();
+  }
   else if(Scoreboard.leftScore == 5 || Scoreboard.rightScore == 5) {
     background(nightmode.Base);
     for(Ball star : stars){
