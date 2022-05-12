@@ -171,10 +171,12 @@ class Paddle {
   //Start Paddle Reduction
   void drawPaddles() {                   
     fill(paddle.colour);
+    stroke(nightmode.Contrast);
     //Draws paddle and reduces paddle size based on the players score
     rect(paddleX, paddleY, paddleWidth, paddleHeight);
     if (paddleY < displayHeight+25) this.paddleY += 3;
     fill(colourResetWhite);
+    stroke(nightmode.Base);
     }
   
 }
