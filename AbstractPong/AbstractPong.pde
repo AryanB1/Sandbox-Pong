@@ -117,8 +117,8 @@ void setup()
   //Creating circle and rectangle objects 
   Rectangle rHexLeft = new Rectangle(appWidth*1/40, appHeight*1/4, rectWidth, rectHeight, colourRectLeft);
   Rectangle rHexRight = new Rectangle(appWidth*39/40-rectWidth, appHeight*1/4, rectWidth, rectHeight, colourRectRight);
-  Rectangle rectDropL = new Rectangle(appWidth*1/40, appHeight, rectWidth, appHeight*1/25, colourRectLeft, "Left");
-  Rectangle rectDropR = new Rectangle(appWidth*39/40-rectWidth, appHeight, rectWidth, appHeight*1/25, colourRectRight, "Right");
+  Rectangle rectDropL = new Rectangle(appWidth*1/40, appHeight+100, rectWidth, appHeight*1/25, colourRectLeft, "Left");
+  Rectangle rectDropR = new Rectangle(appWidth*39/40-rectWidth, appHeight+100, rectWidth, appHeight*1/25, colourRectRight, "Right");
   Rectangle lBoard = new Rectangle(appWidth/5, 0, appWidth/10, appHeight/10, base);
   Rectangle rBoard = new Rectangle(appWidth*3/5, 0, appWidth/10, appHeight/10, base);
   Rectangle leftLine = new Rectangle(appWidth*1/40, 0, 5, appHeight, base);
@@ -201,7 +201,7 @@ else {
   if ( instructionsOn==true ) shapes.get(instructionElement).draw(); //Annonymous Class
   //
   //Arithmetic
-  if ( instructionsOn==false ) {
+  else {
     if(lScore == 5) {
       shapes.get(sBox).objectColour = base;
       shapes.get(sBox).draw();
@@ -210,7 +210,7 @@ else {
       textSize(displayHeight*1/30);
       text("Congratulations! Left Player Wins! Press Z to reset game!", displayWidth*3/10+displayWidth*1/5, displayHeight*4/10+displayHeight*1/10);
     }
-    if(rScore == 5) {
+    else if(rScore == 5) {
       shapes.get(sBox).objectColour = base;
       shapes.get(sBox).draw();
       fill(contrast);
@@ -231,8 +231,20 @@ else {
       shapes.get(rectR).objectColour = colourRectRight;
       for(int i = mDot; i < lenMiddle; i++) shapes.get(i).objectColour = base;
       shapes.get(ballElement).objectColour = colourBall;
-      shapes.get(ballElement).paddleBounceLeft( shapes.get(paddleLeftElement).x, shapes.get(paddleLeftElement).y, shapes.get(paddleLeftElement).w, shapes.get(paddleLeftElement).h );
-      shapes.get(ballElement).paddleBounceRight( shapes.get(paddleRightElement).x, shapes.get(paddleRightElement).y, shapes.get(paddleRightElement).h ); 
+      for (int i = ballElement; i < shapes.size(); i++) {
+        shapes.get(i).paddleBounceLeft( shapes.get(paddleLeftElement).x, shapes.get(paddleLeftElement).y, shapes.get(paddleLeftElement).w, shapes.get(paddleLeftElement).h );
+        shapes.get(i).paddleBounceRight( shapes.get(paddleRightElement).x, shapes.get(paddleRightElement).y, shapes.get(paddleRightElement).h ); 
+      }
+      if(int(shapes.get(rectL).y) < int(appHeight+50)) {
+        shapes.get(sBox).objectColour = contrast;
+        // Cause thing to appear
+      //Do same for RectR 
+      }
+      if(int(shapes.get(rectR).y) < int(appHeight+50)) {
+        shapes.get(sBox).objectColour = contrast;
+        // Cause thing to appear
+      //Do same for RectR 
+    }
       //Drawing where tokens should be
       //Screensaver functional 
       if(screensaver == true) {

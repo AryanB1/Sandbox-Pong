@@ -28,26 +28,32 @@ class Circle extends Shape {
   }//End draw
   //
   int ballRandomChooser() {
-    return int( random (3, 6) );
+    return int( random (2, 4) );
   }//End ballRandomChooser
   //
   void ballPlay() {
     //Scoring on Left and Right Goals, resetting variables to decrease system resourses
     if (x < (width*0)+w ) { //Goal for left player
-      this.x = displayWidth*1/2;
-      this.y = displayHeight*1/2; //Variable becomes "final" here
+      for(int i = lenMiddle; i < shapes.size(); i++) {
+        shapes.get(i).x = displayWidth*1/2;
+        shapes.get(i).y = displayHeight*1/2; //Variable becomes "final" here
+      }
       rScore += 1;
       shapes.get(2).h -= height*1/25;
       shapes.get(7).y = shapes.get(2).y+shapes.get(2).h;
-      numBalls += 1;
+      // Initiating a second ball on final point
+      if(rScore == 4) numBalls += 1;
     }
     if ( x > width - w ) { //Goal for right player
-      this.x = displayWidth*1/2;
-      this.y = displayWidth*1/2; //Variable becomes "final" here
+      for(int i = lenMiddle; i < shapes.size(); i++) {
+        shapes.get(i).x = displayWidth*1/2;
+        shapes.get(i).y = displayHeight*1/2; //Variable becomes "final" here
+      }
       lScore += 1;
       shapes.get(1).h -= height*1/25;
       shapes.get(6).y = shapes.get(1).y+shapes.get(1).h;
-      numBalls += 1;
+      // Initiating a second ball for the final point 
+      if (lScore == 4) numBalls += 1;
     }
     //End Net Detection
     //
