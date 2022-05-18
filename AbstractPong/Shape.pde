@@ -24,5 +24,9 @@ abstract class Shape {
   //Must be declared here, like draw();
   abstract void paddleBounceLeft( float x, float y, float w, float h );
   abstract void paddleBounceRight( float x, float y, float h );
+  abstract void leftPaddleSpeed();
+  abstract void rightPaddleSpeed();
+  abstract void leftPaddleMove();
+  abstract void rightPaddleMove();
   //
 }//End Shape

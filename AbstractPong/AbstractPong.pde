@@ -1,6 +1,7 @@
-/*Note: require an object that talks to different objects
- Ball Class, change to appWidth and appHeight
- To Do: fix the color() fill() bug between Circle{} and Rectangle{}
+/*Note:
+Figure out how to support multiple balls
+Create the metaphors / Other needed features
+Submit and become elite waterloo engineer
  */
 //
 //Global Variables & Other Items (Classes)
@@ -14,8 +15,9 @@ int colourBall, colourRectLeft, colourRectRight;
 int lenMiddle;
 // Variables for left and right score board
 int lScore = 0, rScore = 0;
+// Variable for number of balls 
+int numBalls = 1;
 //Variables for ball speed;
-int lPaddleSpeed = 0, rPaddleSpeed = 0;
 //Annonymous Class, one time object
 //These numbers in new shape don't matter since I declare the object again in setup after the displayWidth is set
 Shape instructions = new Shape (0, 100, 200, 300, base) { //These hardcoded variables are minimum display, here
@@ -64,6 +66,10 @@ Shape instructions = new Shape (0, 100, 200, 300, base) { //These hardcoded vari
   }
   void paddleBounceRight( float x, float y, float h ) {
   }
+  void leftPaddleSpeed(){};
+  void rightPaddleSpeed(){};
+  void leftPaddleMove() {};
+  void rightPaddleMove(){};
 }
 ; //Necessary Code
 //
@@ -90,10 +96,6 @@ void setup()
   }
   shapes.add(instructions); //Elememt 0
   // Redefine instruction location now that fullscreen has been called.
-  shapes.get(0).x = displayWidth*3/40;
-  shapes.get(0).y = displayHeight*3/40;
-  shapes.get(0).w = displayWidth*35/40;
-  shapes.get(0).h = displayHeight*35/40;
   //Creating Local Variables
   int yDiameter;
   int xDiameter = yDiameter = appWidth*1/90;
@@ -115,21 +117,27 @@ void setup()
   //Creating circle and rectangle objects 
   Rectangle rHexLeft = new Rectangle(appWidth*1/40, appHeight*1/4, rectWidth, rectHeight, colourRectLeft);
   Rectangle rHexRight = new Rectangle(appWidth*39/40-rectWidth, appHeight*1/4, rectWidth, rectHeight, colourRectRight);
+  Rectangle rectDropL = new Rectangle(appWidth*1/40, appHeight, rectWidth, appHeight*1/25, colourRectLeft, "Left");
+  Rectangle rectDropR = new Rectangle(appWidth*39/40-rectWidth, appHeight, rectWidth, appHeight*1/25, colourRectRight, "Right");
   Rectangle lBoard = new Rectangle(appWidth/5, 0, appWidth/10, appHeight/10, base);
   Rectangle rBoard = new Rectangle(appWidth*3/5, 0, appWidth/10, appHeight/10, base);
   Rectangle leftLine = new Rectangle(appWidth*1/40, 0, 5, appHeight, base);
   Rectangle rightLine = new Rectangle(appWidth*39/40, 0, 6, appHeight, base);
   Rectangle middleLine = new Rectangle(appWidth*1/2, 0, 5, appHeight, base);
+  Rectangle screenBox = new Rectangle(appWidth*2.5/10, appHeight*4/10, appWidth*1/2, appHeight*2/10, base);
   Circle cHex = new Circle(appWidth*1/2, appHeight*1/2, xDiameter, yDiameter, colourBall);
   //
-  //Elements 1-8
+  //Elements 1-10
   shapes.add(rHexLeft); 
   shapes.add(rHexRight); 
   shapes.add(lBoard);
   shapes.add(rBoard);
-  shapes.add(leftLine);
+  shapes.add(screenBox);
+  shapes.add(rectDropL);
+  shapes.add(rectDropR);
   shapes.add(rightLine);
   shapes.add(middleLine);
+  shapes.add(leftLine);
   for (int i = 15; i < displayHeight; i += 50) {
     //sets colour, to create dotted effect
     Rectangle dots = new Rectangle(appWidth*1/2, i, 5, 25, contrast);
@@ -149,9 +157,11 @@ void draw() {
     base = 255;
     contrast = 0;
   }
+  int sBox = 5;
   if (screenCheck == false ) {
-    fill(base);
-    rect(displayWidth*2.5/10, displayHeight*4/10, displayWidth*1/2, displayHeight*2/10);
+    background(base);
+    shapes.get(sBox).objectColour = base;
+    shapes.get(sBox).draw();
     fill(contrast);
     textAlign(CENTER);
     textSize(displayHeight*1/30);
@@ -162,32 +172,67 @@ else {
   //If nightmode is true, background is white, and foreground (text and lines) is black
   background(base);
   stroke(base);
-  //
+  // Things to call
   int instructionElement = 0;
   int paddleLeftElement = 1;
   int paddleRightElement = 2;
   int lBoardElement = 3;
   int rBoardElement = 4;
+  int lLine = 10;
+  int rLine = 8;
+  int mLine = 9;
+  int rectL = 6;
+  int rectR = 7;
+  int mDot = 11;
   int ballElement = lenMiddle;
-
+  shapes.get(instructionElement).x = displayWidth*3/40;
+  shapes.get(instructionElement).y = displayHeight*3/40;
+  shapes.get(instructionElement).w = displayWidth*35/40;
+  shapes.get(instructionElement).h = displayHeight*35/40;
+  if(lScore == 0 && rScore == 0) {
+    shapes.get(paddleLeftElement).h = appHeight*1/4;
+    shapes.get(paddleRightElement).h = appHeight*1/4;
+  }
+  if(shapes.size() - lenMiddle < numBalls) {
+    Circle ballNew = new Circle(appWidth*1/2, appHeight*1/2, appWidth*1/90, appWidth*1/90, colourBall);
+    shapes.add(ballNew);
+  }
   //
   if ( instructionsOn==true ) shapes.get(instructionElement).draw(); //Annonymous Class
   //
   //Arithmetic
   if ( instructionsOn==false ) {
-    if(lScore == 5 || rScore == 5) {}
+    if(lScore == 5) {
+      shapes.get(sBox).objectColour = base;
+      shapes.get(sBox).draw();
+      fill(contrast);
+      textAlign(CENTER);
+      textSize(displayHeight*1/30);
+      text("Congratulations! Left Player Wins! Press Z to reset game!", displayWidth*3/10+displayWidth*1/5, displayHeight*4/10+displayHeight*1/10);
+    }
+    if(rScore == 5) {
+      shapes.get(sBox).objectColour = base;
+      shapes.get(sBox).draw();
+      fill(contrast);
+      textAlign(CENTER);
+      textSize(displayHeight*1/30);
+      text("Congratulations! Right Player Wins! Press Z to reset game!", displayWidth*3/10+displayWidth*1/5, displayHeight*4/10+displayHeight*1/10);
+    }
     else{
       shapes.get(paddleLeftElement).objectColour = colourRectLeft;
       shapes.get(paddleRightElement).objectColour = colourRectRight;
       shapes.get(lBoardElement).objectColour = base;
       shapes.get(rBoardElement).objectColour = base;
-      shapes.get(5).objectColour = contrast;
-      shapes.get(6).objectColour = contrast;
-      shapes.get(7).objectColour = contrast;
-      for(int i = 8; i < lenMiddle; i++) shapes.get(i).objectColour = base;
+      shapes.get(sBox).objectColour = base;
+      shapes.get(lLine).objectColour = contrast;
+      shapes.get(rLine).objectColour = contrast;
+      shapes.get(mLine).objectColour = contrast;
+      shapes.get(rectL).objectColour = colourRectLeft;
+      shapes.get(rectR).objectColour = colourRectRight;
+      for(int i = mDot; i < lenMiddle; i++) shapes.get(i).objectColour = base;
       shapes.get(ballElement).objectColour = colourBall;
       shapes.get(ballElement).paddleBounceLeft( shapes.get(paddleLeftElement).x, shapes.get(paddleLeftElement).y, shapes.get(paddleLeftElement).w, shapes.get(paddleLeftElement).h );
-      shapes.get(ballElement).paddleBounceRight( shapes.get(paddleRightElement).x, shapes.get(paddleRightElement).y, shapes.get(paddleRightElement).h );
+      shapes.get(ballElement).paddleBounceRight( shapes.get(paddleRightElement).x, shapes.get(paddleRightElement).y, shapes.get(paddleRightElement).h ); 
       //Drawing where tokens should be
       //Screensaver functional 
       if(screensaver == true) {
@@ -218,6 +263,8 @@ else {
 void keyPressed() {
   int paddleLeftElement = 1;
   int paddleRightElement = 2;
+  int rectL = 6;
+  int rectR = 7;
   // Opens And Closes Instructions
   if ( key == 'I' || key == 'i' ) {
     if ( instructionsOn==true ) {
@@ -226,18 +273,18 @@ void keyPressed() {
       instructionsOn=true;
     }
   }
-  // Left Paddle Up
-  if ( key == 'W' || key == 'w' ) shapes.get(paddleLeftElement).y -= lPaddleSpeed;
-  // Left Paddle Down
-  if ( key == 'S' || key == 's' ) shapes.get(paddleLeftElement).y += lPaddleSpeed;
-  // Right Paddle Up
-  if ( key == CODED && keyCode == UP ) shapes.get(paddleRightElement).y -= rPaddleSpeed;
-  // Right Paddle Down
-  if ( key == CODED && keyCode == DOWN )shapes.get(paddleRightElement).y += rPaddleSpeed;
+  shapes.get(paddleLeftElement).leftPaddleSpeed();
+  shapes.get(paddleRightElement).rightPaddleSpeed();
+  shapes.get(paddleLeftElement).leftPaddleMove();
+  shapes.get(paddleRightElement).rightPaddleMove();
   // Turn On Screen Saver
-  if(key == 'f' || key == 'F') screensaver = true;
+  if(key == 'f' || key == 'F'){
+    screensaver = true;
+  }
   // Turn On Single Player
-  if(key == 'j' || key == 'J') singleplayer = true;
+  if(key == 'j' || key == 'J'){
+    singleplayer = true;
+  }
   // Turn On Night Mode 
   if(key == 'q' || key == 'Q') {
     nightmode = true;
@@ -248,28 +295,21 @@ void keyPressed() {
   // Turn Off Night Mode
   if(key == 'e' || key == 'E') {
     nightmode = false;
-    colourRectLeft = color(int( random(50, 200) ), int( random(50, 200) ), int( random(50, 200) ));
+    colourRectLeft = color(int( random(50, 200) ), int( random(50, 200) ), int( random(0) ));
     colourRectRight = color(int( random(50, 200) ), int( random(50, 200) ), int( random(50, 200) ));
     colourBall = color(int( random(50, 200) ), int( random(50, 200) ), int( random(50, 200) ));
   }
   //Setting Paddle Speeds 
-  if(key == 'n' || key == 'N') lPaddleSpeed = 10;
-  if(key == 'r' || key == 'R') lPaddleSpeed = 20;
-  if(key == 'g' || key == 'G') lPaddleSpeed = 30;
-  if(key == 'm' || key == 'M') rPaddleSpeed = 10;
-  if(key == 't' || key == 'T') rPaddleSpeed = 20;
-  if(key == 'h' || key == 'H') rPaddleSpeed = 30;
   // Reset Game
   if(key == 'z' || key == 'Z') {
     //Scoreboards to original
     lScore = 0;
     rScore = 0;
-    // Paddle Speed to original
-    lPaddleSpeed = 0;
-    rPaddleSpeed = 0;
-    //Paddle height to original
-    shapes.get(1).y = appHeight*1/4;
-    shapes.get(2).y = appHeight*1/4;
+    //Paddle position to original
+    shapes.get(paddleLeftElement).y = appHeight*1/4;
+    shapes.get(paddleRightElement).y = appHeight*1/4;
+    shapes.get(rectL).y = height;
+    shapes.get(rectR).y = height;
     // Ball to original
     shapes.get(lenMiddle).x = displayWidth*1/2;
     shapes.get(lenMiddle).y = displayHeight*1/2;

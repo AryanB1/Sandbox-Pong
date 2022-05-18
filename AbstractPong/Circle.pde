@@ -1,13 +1,15 @@
 class Circle extends Shape {
   //Global Variables
   float ballSpeedX, ballSpeedY, directionX=0, directionY=0, ballMoveX, ballMoveY;
-  Boolean ballXGoal;
+  Boolean ballXGoal, lPaddle, rPaddle;
   //
   //Constructor
   Circle(float x, float y, float w, float h, color objectColour) {
     super(x, y, w, h, objectColour);
     this.ballSpeedX = ballRandomChooser(); //Best practice
     this.ballSpeedY = ballRandomChooser(); 
+    this.lPaddle = false;
+    this.rPaddle = false;
     while ( directionX == 0 ) {
       this.directionX = int (random (-2, 2) );
     }//End WHILE
@@ -31,30 +33,33 @@ class Circle extends Shape {
   //
   void ballPlay() {
     //Scoring on Left and Right Goals, resetting variables to decrease system resourses
-    if ( x < (width*0)+w || x > width - w) { //Net Detection
-      if (x < (width*0)+w ) { //Goal for left player
-        this.x = displayWidth*1/2;
-        this.y = displayHeight*1/2; //Variable becomes "final" here
-        rScore += 1;
-      }
-      if ( x > width - w ) { //Goal for right player
-        this.x = displayWidth*1/2;
-        this.y = displayWidth*1/2; //Variable becomes "final" here
-        lScore += 1;
-      }
-    } //End Net Detection
+    if (x < (width*0)+w ) { //Goal for left player
+      this.x = displayWidth*1/2;
+      this.y = displayHeight*1/2; //Variable becomes "final" here
+      rScore += 1;
+      shapes.get(2).h -= height*1/25;
+      shapes.get(7).y = shapes.get(2).y+shapes.get(2).h;
+      numBalls += 1;
+    }
+    if ( x > width - w ) { //Goal for right player
+      this.x = displayWidth*1/2;
+      this.y = displayWidth*1/2; //Variable becomes "final" here
+      lScore += 1;
+      shapes.get(1).h -= height*1/25;
+      shapes.get(6).y = shapes.get(1).y+shapes.get(1).h;
+      numBalls += 1;
+    }
+    //End Net Detection
     //
     //Top and Bottom bounce
     // Bounce of Top and Bottom: bounce is a range and we move the ball if out-of-bounds
-    if ( y-w*1/2 < displayHeight*0 || y+w*1/2 > displayHeight ) directionY *= -1;
-    //
+    if ( y-w*1/2 < 0 || y+w*1/2 > height ) directionY *= -1;
+    //  
     //Ball "Step"
-    if (lPaddleSpeed > 0 && rPaddleSpeed > 0) { //EMPTY IF to skip ball arithmetic, when score happens
-      ballMoveX = ballSpeedX*directionX;
-      ballMoveY = ballSpeedY*directionY;
-      x += ballMoveX;
-      y += ballMoveY;
-    }
+    ballMoveX = ballSpeedX*directionX;
+    ballMoveY = ballSpeedY*directionY;
+    x += ballMoveX;
+    y += ballMoveY;
   }//End ballPlay()
   //My bouce algorithm is better than what is shown in the class
   //because it has a greater than and a less than
@@ -68,6 +73,12 @@ class Circle extends Shape {
   void paddleBounceRight(float paddleX, float paddleY, float paddleHeight) {
     if (x <= paddleX && x >= paddleX-w*1/2 && y >= paddleY-w*1/2 && y <= paddleY+paddleHeight) directionX *= -1;
   }
+  void leftPaddleSpeed(){
+  };
+  void rightPaddleSpeed(){
+  };
+  void leftPaddleMove() {};
+  void rightPaddleMove(){};
   //
   
 }//End Circle
