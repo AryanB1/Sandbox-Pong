@@ -125,6 +125,8 @@ void setup()
   Rectangle rightLine = new Rectangle(appWidth*39/40, 0, 6, appHeight, base);
   Rectangle middleLine = new Rectangle(appWidth*1/2, 0, 5, appHeight, base);
   Rectangle screenBox = new Rectangle(appWidth*2.5/10, appHeight*4/10, appWidth*1/2, appHeight*2/10, base);
+  Rectangle lGoalScore = new Rectangle(appWidth*1.5/10, appHeight*4/10, appWidth*3/10, appHeight*2/10, base);
+  Rectangle rGoalScore = new Rectangle(appWidth*5.5/10, appHeight*4/10, appWidth*3.5/10, appHeight*2/10, base);
   Circle cHex = new Circle(appWidth*1/2, appHeight*1/2, xDiameter, yDiameter, colourBall);
   //
   //Elements 1-10
@@ -138,6 +140,8 @@ void setup()
   shapes.add(rightLine);
   shapes.add(middleLine);
   shapes.add(leftLine);
+  shapes.add(lGoalScore);
+  shapes.add(rGoalScore);
   for (int i = 15; i < displayHeight; i += 50) {
     //sets colour, to create dotted effect
     Rectangle dots = new Rectangle(appWidth*1/2, i, 5, 25, contrast);
@@ -183,7 +187,9 @@ else {
   int mLine = 9;
   int rectL = 6;
   int rectR = 7;
-  int mDot = 11;
+  int lGoalScore = 11;
+  int rGoalScore = 12;
+  int mDot = 13;
   int ballElement = lenMiddle;
   shapes.get(instructionElement).x = displayWidth*3/40;
   shapes.get(instructionElement).y = displayHeight*3/40;
@@ -229,22 +235,14 @@ else {
       shapes.get(mLine).objectColour = contrast;
       shapes.get(rectL).objectColour = colourRectLeft;
       shapes.get(rectR).objectColour = colourRectRight;
+      shapes.get(lGoalScore).objectColour = base;
+      shapes.get(rGoalScore).objectColour = base;
       for(int i = mDot; i < lenMiddle; i++) shapes.get(i).objectColour = base;
       shapes.get(ballElement).objectColour = colourBall;
       for (int i = ballElement; i < shapes.size(); i++) {
         shapes.get(i).paddleBounceLeft( shapes.get(paddleLeftElement).x, shapes.get(paddleLeftElement).y, shapes.get(paddleLeftElement).w, shapes.get(paddleLeftElement).h );
         shapes.get(i).paddleBounceRight( shapes.get(paddleRightElement).x, shapes.get(paddleRightElement).y, shapes.get(paddleRightElement).h ); 
       }
-      if(int(shapes.get(rectL).y) < int(appHeight+50)) {
-        shapes.get(sBox).objectColour = contrast;
-        // Cause thing to appear
-      //Do same for RectR 
-      }
-      if(int(shapes.get(rectR).y) < int(appHeight+50)) {
-        shapes.get(sBox).objectColour = contrast;
-        // Cause thing to appear
-      //Do same for RectR 
-    }
       //Drawing where tokens should be
       //Screensaver functional 
       if(screensaver == true) {
@@ -261,6 +259,16 @@ else {
       }
       fill(contrast);
       stroke(contrast);
+      if(int(shapes.get(rectL).y) < int(appHeight+50)) {
+        textAlign(CENTER);
+        textSize(displayHeight*1/30);
+        text("Left Player Scored!", shapes.get(lGoalScore).x+(shapes.get(lGoalScore).w/2), shapes.get(lGoalScore).y+(shapes.get(lGoalScore).h/2));
+      }
+      if(int(shapes.get(rectR).y) < int(appHeight+50)) {
+        textAlign(CENTER);
+        textSize(displayHeight*1/30);
+        text("Right Player Scored!", shapes.get(rGoalScore).x+(shapes.get(rGoalScore).w/2), shapes.get(rGoalScore).y+(shapes.get(rGoalScore).h/2));
+    }
       textAlign(CENTER);
       textSize(shapes.get(lBoardElement).h/2);
       text(lScore, (shapes.get(lBoardElement).x+(shapes.get(lBoardElement).w*1/2)), (shapes.get(lBoardElement).y+(shapes.get(lBoardElement).h*1/2)));
