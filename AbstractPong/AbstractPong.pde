@@ -17,6 +17,8 @@ int lenMiddle;
 int lScore = 0, rScore = 0;
 // Variable for number of balls 
 int numBalls = 1;
+// Variable for mouse press
+int xMouse, yMouse, lenBall;
 //Variables for ball speed;
 //Annonymous Class, one time object
 //These numbers in new shape don't matter since I declare the object again in setup after the displayWidth is set
@@ -41,14 +43,14 @@ Shape instructions = new Shape (0, 100, 200, 300, base) { //These hardcoded vari
   "To move the right paddle down, press the down key",
   "For Left Paddle Speed, Press n (hard), r (normal), g (easy)",
   "For Right Paddle Speed, Press m (hard), t (normal), h (easy)",
+  "By default both of these speed parameters are set to easy",
   "To reset game press z",
   "Click any number key beteween 1-9 if you want to add or remove balls (there is one ball by default)",
   "A point is scored by getting a point into the enemy players net, or in the case of single player mode, hitting the ball", 
   "First one to 5 points wins!!",
-  "Press v to close this window. It can be reopened at any time with the k key",
-  "You can also use the k key to take a break",
-  "When you have three points, try clicking somewhere in the middle of the screen",
-  "When you have four points try the same thing!"
+  "Press i to close this window! It can be reopened any time you need to see the instructions or take a break!",
+  "You can use the o(easy), u(normal), and p(hard) keys to set the ball speed. By default, the speed is set to easy",
+  "If the addition of the left and right scoreboard equals 3, try clicking anywhere in the middle of the screen!"
 };
     for(int i = 0; i < instructions.length; i++) {
       textAlign(CENTER);
@@ -70,6 +72,7 @@ Shape instructions = new Shape (0, 100, 200, 300, base) { //These hardcoded vari
   void rightPaddleSpeed(){};
   void leftPaddleMove() {};
   void rightPaddleMove(){};
+  void ballSpeed() {}
 }
 ; //Necessary Code
 //
@@ -124,7 +127,7 @@ void setup()
   Rectangle leftLine = new Rectangle(appWidth*1/40, 0, 5, appHeight, base);
   Rectangle rightLine = new Rectangle(appWidth*39/40, 0, 6, appHeight, base);
   Rectangle middleLine = new Rectangle(appWidth*1/2, 0, 5, appHeight, base);
-  Rectangle screenBox = new Rectangle(appWidth*2.5/10, appHeight*4/10, appWidth*1/2, appHeight*2/10, base);
+  Rectangle screenBox = new Rectangle(appWidth*2/10, appHeight*4/10, appWidth*6/10, appHeight*2/10, base);
   Rectangle lGoalScore = new Rectangle(appWidth*1.5/10, appHeight*4/10, appWidth*3/10, appHeight*2/10, base);
   Rectangle rGoalScore = new Rectangle(appWidth*5.5/10, appHeight*4/10, appWidth*3.5/10, appHeight*2/10, base);
   Circle cHex = new Circle(appWidth*1/2, appHeight*1/2, xDiameter, yDiameter, colourBall);
@@ -149,6 +152,7 @@ void setup()
   }
   lenMiddle = shapes.size();
   shapes.add(cHex);
+  lenBall = shapes.size();
 }
 //End setup
 //
@@ -203,21 +207,67 @@ else {
     Circle ballNew = new Circle(appWidth*1/2, appHeight*1/2, appWidth*1/90, appWidth*1/90, colourBall);
     shapes.add(ballNew);
   }
+  if(shapes.size() - lenMiddle > numBalls) {
+    shapes.remove(shapes.size()-1);
+  }
   //
   if ( instructionsOn==true ) shapes.get(instructionElement).draw(); //Annonymous Class
   //
   //Arithmetic
   else {
-    if(lScore == 5) {
+    //Game Winning!!!
+    if(lScore >= 5) {
+      //Shapes are drawn and redrawn in nearly every iteration which looks way cooler than stationary
+      for (int i=lenBall; i < lenBall+5; i++) {
+        //Randomly choose parameters
+        int diameterRandom = int(random ( displayWidth*1/8, displayWidth*1/6)); //Consider user Input (eye sentitivity)
+        int xRandom = int(random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 )); //No stars in net
+        int yRandom = int(random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 )); //Entire displayHeight OK
+        Circle circles = new Circle(xRandom, yRandom, diameterRandom, diameterRandom, colourBall, 0);
+        shapes.add(circles);
+        if ( xRandom-diameterRandom*1/2 > shapes.get(i).x && xRandom+diameterRandom*1/2 < shapes.get(i).x ) {
+        xRandom = int(random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 ));
+        shapes.get(i).x = xRandom;
+        }
+       if ( yRandom-diameterRandom*1/2 > shapes.get(i).x && yRandom+diameterRandom*1/2 < shapes.get(i).x ) {
+         yRandom = int(random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 ));
+         shapes.get(i).y = yRandom;
+      //
+       }
+     }
       shapes.get(sBox).objectColour = base;
+      for(int i = lenBall; i < shapes.size(); i++) {
+        shapes.get(i).draw();
+      }
       shapes.get(sBox).draw();
       fill(contrast);
       textAlign(CENTER);
       textSize(displayHeight*1/30);
       text("Congratulations! Left Player Wins! Press Z to reset game!", displayWidth*3/10+displayWidth*1/5, displayHeight*4/10+displayHeight*1/10);
     }
-    else if(rScore == 5) {
+    else if(rScore >= 5) {
+      //Shapes are drawn and redrawn in nearly every iteration which looks way cooler than stationary
+      for (int i=lenBall; i < lenBall+5; i++) {
+        //Randomly choose parameters
+        int diameterRandom = int(random ( displayWidth*1/8, displayWidth*1/6)); //Consider user Input (eye sentitivity)
+        int xRandom = int(random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 )); //No stars in net
+        int yRandom = int(random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 )); //Entire displayHeight OK
+        Circle circles = new Circle(xRandom, yRandom, diameterRandom, diameterRandom, colourBall, 0);
+        shapes.add(circles);
+        if ( xRandom-diameterRandom*1/2 > shapes.get(i).x && xRandom+diameterRandom*1/2 < shapes.get(i).x ) {
+        xRandom = int(random ( diameterRandom*1/2, displayWidth-diameterRandom*1/2 ));
+        shapes.get(i).x = xRandom;
+        }
+       if ( yRandom-diameterRandom*1/2 > shapes.get(i).x && yRandom+diameterRandom*1/2 < shapes.get(i).x ) {
+         yRandom = int(random ( diameterRandom*1/2, displayHeight-diameterRandom*1/2 ));
+         shapes.get(i).y = yRandom;
+      //
+       }
+     }
       shapes.get(sBox).objectColour = base;
+      for(int i = lenBall; i < shapes.size(); i++) {
+        shapes.get(i).draw();
+      }
       shapes.get(sBox).draw();
       fill(contrast);
       textAlign(CENTER);
@@ -225,6 +275,7 @@ else {
       text("Congratulations! Right Player Wins! Press Z to reset game!", displayWidth*3/10+displayWidth*1/5, displayHeight*4/10+displayHeight*1/10);
     }
     else{
+      // Setting the Right Colour
       shapes.get(paddleLeftElement).objectColour = colourRectLeft;
       shapes.get(paddleRightElement).objectColour = colourRectRight;
       shapes.get(lBoardElement).objectColour = base;
@@ -247,13 +298,19 @@ else {
       //Screensaver functional 
       if(screensaver == true) {
         shapes.get(paddleLeftElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;
-        shapes.get(paddleRightElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;    
+        if(shapes.get(paddleLeftElement).y < 0) shapes.get(paddleLeftElement).y = 0;  
+        if(shapes.get(paddleLeftElement).y+shapes.get(paddleLeftElement).h > height) shapes.get(paddleLeftElement).y = height-shapes.get(paddleLeftElement).h;  
+        shapes.get(paddleRightElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;
+        if(shapes.get(paddleRightElement).y < 0) shapes.get(paddleRightElement).y = 0;  
+        if(shapes.get(paddleRightElement).y+shapes.get(paddleRightElement).h > height) shapes.get(paddleRightElement).y = height-shapes.get(paddleRightElement).h;  
       }
       if(singleplayer == true) {
         shapes.get(paddleRightElement).y = shapes.get(ballElement).y - shapes.get(paddleLeftElement).h/2;
+        if(shapes.get(paddleRightElement).y < 0) shapes.get(paddleRightElement).y = 0;  
+        if(shapes.get(paddleRightElement).y+shapes.get(paddleRightElement).h > height) shapes.get(paddleRightElement).y = height-shapes.get(paddleRightElement).h;  
       }
       //Note: repeats basic FOR-Each like belowss
-      for ( int i=1; i<shapes.size(); i++ ) {
+      for ( int i=1; i<lenMiddle + numBalls; i++ ) {
         shapes.get(i).draw();
         //println("here", i);
       }
@@ -274,7 +331,7 @@ else {
       text(lScore, (shapes.get(lBoardElement).x+(shapes.get(lBoardElement).w*1/2)), (shapes.get(lBoardElement).y+(shapes.get(lBoardElement).h*1/2)));
       text(rScore, (shapes.get(rBoardElement).x+(shapes.get(rBoardElement).w*1/2)), (shapes.get(rBoardElement).y+(shapes.get(rBoardElement).h*1/2)));
     }
-  }//End instructionsOn==false
+  }
 }
   //
 }
@@ -297,6 +354,7 @@ void keyPressed() {
   shapes.get(paddleRightElement).rightPaddleSpeed();
   shapes.get(paddleLeftElement).leftPaddleMove();
   shapes.get(paddleRightElement).rightPaddleMove();
+  for(int i = lenMiddle; i < shapes.size(); i++) shapes.get(i).ballSpeed();
   // Turn On Screen Saver
   if(key == 'f' || key == 'F'){
     screensaver = true;
@@ -325,6 +383,7 @@ void keyPressed() {
     //Scoreboards to original
     lScore = 0;
     rScore = 0;
+    numBalls = 1;
     //Paddle position to original
     shapes.get(paddleLeftElement).y = appHeight*1/4;
     shapes.get(paddleRightElement).y = appHeight*1/4;
@@ -341,24 +400,14 @@ void keyPressed() {
   }
 }
 //End keyPressed
-/*
 void mousePressed() {
-  //Note, trigger: this trigger will work anytime, actual trigger should be after celebration is complete
-  //Be creative on your Pong BALL Triggers (i.e. add score +1 = number of new BALLs in play)
-  int ballElement = 3;
-  shapes.remove(ballElement); //Ball Element
-  //
-  //Copy and Pasting local variables is not best practice
-  //Use for this lesson on leveraging local variables in garbage collection
-  int yDiameter;
-  int xDiameter = yDiameter = appWidth*1/90;
-  int colourDayBall = color(int( random(50, 200) ), int( random(50, 200) ), int( random(50, 200) ));
-  int colourNightBall = color(int( random(50, 200) ), int( random(50, 200) ), int( random(0) ));
-  Circle cHex = new Circle(appWidth*1/2, appHeight*1/2, xDiameter, yDiameter, colourDayBall, colourNightBall);
-  //
-  shapes.add(ballElement, cHex); //Replace BALL Element Hardcoded into void draw()
-  //
+  if(instructionsOn == false) {
+    // The inclusion of the 3 is an easter egg to how many times I've rewritten this game
+   if(mouseX > displayWidth*5/40 && mouseX < displayWidth*35/40 && mouseY > displayHeight*5/40 && mouseY < displayHeight*35/40 && (lScore + rScore) == 3 && xMouse == 0 && yMouse == 0){
+     xMouse = int(shapes.get(lenMiddle).x - mouseX);
+     yMouse = int(shapes.get(lenMiddle).y - mouseY);
+   }
+  } 
 }//End mousePressed
 //
-*/
 //End MAIN (Driver) Program

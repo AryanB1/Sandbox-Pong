@@ -70,5 +70,6 @@ class Rectangle extends Shape {
   }
   void paddleBounceRight(float x, float y, float h) {
   }
+  void ballSpeed() {}
   //
 }//End Rectangle

@@ -28,5 +28,6 @@ abstract class Shape {
   abstract void rightPaddleSpeed();
   abstract void leftPaddleMove();
   abstract void rightPaddleMove();
+  abstract void ballSpeed();
   //
 }//End Shape
