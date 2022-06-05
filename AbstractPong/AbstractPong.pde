@@ -310,7 +310,7 @@ else {
         if(shapes.get(paddleRightElement).y+shapes.get(paddleRightElement).h > height) shapes.get(paddleRightElement).y = height-shapes.get(paddleRightElement).h;  
       }
       //Note: repeats basic FOR-Each like belowss
-      for ( int i=1; i<lenMiddle + numBalls; i++ ) {
+      for ( int i=1; i< shapes.size(); i++ ) {
         shapes.get(i).draw();
         //println("here", i);
       }
